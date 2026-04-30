@@ -1,0 +1,6 @@
+com\proteingallery\controller\AuthServlet.class
+com\proteingallery\dao\UserDAO.class
+com\proteingallery\util\DBConnection.class
+com\proteingallery\util\PasswordUtil.class
+com\proteingallery\model\User.class
+com\proteingallery\util\AppConfig.class
