@@ -25,6 +25,7 @@
 
             <form action="auth" method="POST">
                 <input type="hidden" name="action" value="login">
+                <input type="hidden" name="csrf_token" value="${sessionScope.csrf_token}">
                 
                 <div class="form-group">
                     <label for="email">Email Address</label>

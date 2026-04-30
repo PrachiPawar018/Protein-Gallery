@@ -1,5 +1,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="jakarta.tags.core" prefix="c" %>
+<script>
+    window.csrfToken = '${sessionScope.csrf_token}';
+</script>
 <style>
     /* Navbar styles */
     .navbar {

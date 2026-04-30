@@ -20,6 +20,7 @@
 
             <form action="auth" method="POST">
                 <input type="hidden" name="action" value="register">
+                <input type="hidden" name="csrf_token" value="${sessionScope.csrf_token}">
                 
                 <div class="form-group">
                     <label for="name">Full Name</label>

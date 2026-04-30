@@ -16,7 +16,7 @@ public class DBConnection {
             config.setJdbcUrl(AppConfig.DB_URL);
             config.setUsername(AppConfig.DB_USER);
             config.setPassword(AppConfig.DB_PASSWORD);
-            config.setDriverClassName("com.mysql.cj.jdbc.Driver");
+            config.setDriverClassName("com.mysql.jdbc.Driver");
             
             // Optimization settings for HikariCP
             config.setMaximumPoolSize(10);

@@ -23,6 +23,7 @@ function updateQuantity(cartId, quantity) {
     const formData = new URLSearchParams();
     formData.append('cartId', cartId);
     formData.append('quantity', quantity);
+    formData.append('csrf_token', window.csrfToken || '');
 
     fetch('cart/update', {
         method: 'POST',
@@ -43,6 +44,7 @@ function updateQuantity(cartId, quantity) {
 function removeItem(cartId) {
     const formData = new URLSearchParams();
     formData.append('cartId', cartId);
+    formData.append('csrf_token', window.csrfToken || '');
 
     fetch('cart/remove', {
         method: 'POST',
