@@ -1,22 +1,20 @@
 package com.proteingallery.controller;
 
-import com.proteingallery.dao.CartDAO;
-import com.proteingallery.model.User;
-import com.proteingallery.model.CartItem;
-
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.util.List;
 
-@WebServlet(urlPatterns = {"/cart/add", "/cart/update", "/cart/remove", "/cart/count"})
+import com.proteingallery.dao.CartDAO;
+import com.proteingallery.model.CartItem;
+import com.proteingallery.model.User;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 public class CartServlet extends HttpServlet {
 
     private CartDAO cartDAO;

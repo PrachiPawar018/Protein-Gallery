@@ -1,19 +1,17 @@
 package com.proteingallery.controller;
 
+import java.io.IOException;
+
 import com.proteingallery.dao.ReviewDAO;
 import com.proteingallery.model.Review;
 import com.proteingallery.model.User;
 
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-import java.io.IOException;
-
-@WebServlet("/review")
 public class ReviewServlet extends HttpServlet {
 
     private ReviewDAO reviewDAO;

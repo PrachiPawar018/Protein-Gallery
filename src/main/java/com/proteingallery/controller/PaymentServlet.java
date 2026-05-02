@@ -1,20 +1,5 @@
 package com.proteingallery.controller;
 
-import com.proteingallery.dao.OrderDAO;
-import com.proteingallery.util.AppConfig;
-import com.proteingallery.util.DBConnection;
-import com.razorpay.Order;
-import com.razorpay.RazorpayClient;
-import com.razorpay.RazorpayException;
-import com.razorpay.Utils;
-import org.json.JSONObject;
-
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.Connection;
@@ -22,7 +7,21 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-@WebServlet(urlPatterns = {"/payment/init", "/payment/verify"})
+import org.json.JSONObject;
+
+import com.proteingallery.dao.OrderDAO;
+import com.proteingallery.util.AppConfig;
+import com.proteingallery.util.DBConnection;
+import com.razorpay.Order;
+import com.razorpay.RazorpayClient;
+import com.razorpay.RazorpayException;
+import com.razorpay.Utils;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
 public class PaymentServlet extends HttpServlet {
 
     private OrderDAO orderDAO;

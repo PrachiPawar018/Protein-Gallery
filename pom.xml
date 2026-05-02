@@ -103,6 +103,9 @@
                     <webApp>
                         <contextPath>/</contextPath>
                     </webApp>
+                    <httpConnector>
+                        <port>8085</port>
+                    </httpConnector>
                     <scan>1</scan>
                 </configuration>
                 <executions>

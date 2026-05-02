@@ -26,7 +26,7 @@
 </head>
 <body>
     <!-- Header/Navbar -->
-    <jsp:include page="WEB-INF/components/navbar.jsp" />
+    <jsp:include page="navbar.jsp" />
 
     <!-- Main Content Container -->
     <main class="main-content"></content>

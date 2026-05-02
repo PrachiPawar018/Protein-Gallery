@@ -1,5 +1,12 @@
 package com.proteingallery.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.proteingallery.dao.CartDAO;
 import com.proteingallery.dao.CouponDAO;
 import com.proteingallery.dao.OrderDAO;
@@ -10,20 +17,11 @@ import com.proteingallery.model.OrderItem;
 import com.proteingallery.model.User;
 
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.util.ArrayList;
-import java.util.List;
-
-@WebServlet(urlPatterns = {"/checkout", "/checkout/apply-coupon", "/checkout/process"})
 public class OrderServlet extends HttpServlet {
 
     private CartDAO cartDAO;

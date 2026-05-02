@@ -71,7 +71,7 @@
     </footer>
 
     <!-- Toast Notifications -->
-    <jsp:include page="WEB-INF/components/toast.jsp" />
+    <jsp:include page="toast.jsp" />
 
     <!-- Global JavaScript -->
     <script src="${pageContext.request.contextPath}/js/main.js"></script>

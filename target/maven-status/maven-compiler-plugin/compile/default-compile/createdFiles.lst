@@ -12,6 +12,7 @@ com\proteingallery\model\Product.class
 com\proteingallery\model\User.class
 com\proteingallery\controller\admin\AdminOrderServlet.class
 com\proteingallery\controller\ReviewServlet.class
+com\proteingallery\test\DatabaseTest.class
 com\proteingallery\controller\CartServlet.class
 com\proteingallery\dao\UserDAO.class
 com\proteingallery\dao\ProductDAO.class
