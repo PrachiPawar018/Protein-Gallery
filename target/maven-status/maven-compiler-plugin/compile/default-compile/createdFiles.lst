@@ -2,6 +2,7 @@ com\proteingallery\dao\ReviewDAO.class
 com\proteingallery\controller\admin\AdminProductServlet.class
 com\proteingallery\filter\CsrfFilter.class
 com\proteingallery\model\Order.class
+com\proteingallery\controller\ForgotPasswordServlet.class
 com\proteingallery\util\AppConfig.class
 com\proteingallery\controller\ProductServlet.class
 com\proteingallery\model\Review.class

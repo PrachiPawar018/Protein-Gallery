@@ -1,5 +1,5 @@
 -- Create Database
-CREATE DATABASE IF NOT EXISTS protein_gallery;
+CREATE DATABASE IF NOT EXISTS protein_gallery CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE protein_gallery;
 
 -- USERS
@@ -10,9 +10,11 @@ CREATE TABLE IF NOT EXISTS users (
     password_hash VARCHAR(255) NOT NULL,      -- BCrypt
     phone_number VARCHAR(15),
     role ENUM('USER','ADMIN') DEFAULT 'USER',
-    is_active BOOLEAN DEFAULT TRUE,
+    is_active TINYINT(1) DEFAULT 1,
+    reset_otp VARCHAR(6) DEFAULT NULL,        -- 6-digit OTP for password reset
+    otp_expiry DATETIME DEFAULT NULL,         -- OTP expiry timestamp
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- PRODUCTS
 CREATE TABLE IF NOT EXISTS products (
