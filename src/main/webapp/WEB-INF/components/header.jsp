@@ -28,5 +28,8 @@
     <!-- Header/Navbar -->
     <jsp:include page="navbar.jsp" />
 
+    <!-- Toast Notifications Container -->
+    <div id="toast-container"></div>
+
     <!-- Main Content Container -->
-    <main class="main-content"></content>
+    <main class="main-content">

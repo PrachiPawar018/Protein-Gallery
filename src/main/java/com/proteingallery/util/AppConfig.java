@@ -12,6 +12,9 @@ public class AppConfig {
     public static final String RAZORPAY_KEY_SECRET = getEnvOrDefault("RAZORPAY_KEY_SECRET", "test_key_secret");
 
     // Email Configuration
+    public static final String SMTP_HOST = getEnvOrDefault("SMTP_HOST", "smtp.gmail.com");
+    public static final String SMTP_PORT = getEnvOrDefault("SMTP_PORT", "587");
+    public static final boolean SMTP_TLS = Boolean.parseBoolean(getEnvOrDefault("SMTP_TLS", "true"));
     public static final String SMTP_USER = getEnvOrDefault("SMTP_USER", "prachipawar5133@gmail.com");
     public static final String SMTP_PASSWORD = getEnvOrDefault("SMTP_PASSWORD", "xraxfoacdqwahcsj");
 

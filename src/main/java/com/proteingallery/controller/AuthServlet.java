@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import com.proteingallery.dao.UserDAO;
 import com.proteingallery.model.User;
+import com.proteingallery.util.EmailUtil;
 import com.proteingallery.util.PasswordUtil;
 
 import jakarta.servlet.ServletException;
@@ -80,6 +81,9 @@ public class AuthServlet extends HttpServlet {
             return;
         }
 
+        name = name.trim();
+        email = email.trim().toLowerCase();
+
         if (userDAO.getUserByEmail(email) != null) {
             response.sendRedirect("register.jsp?error=Email already registered");
             return;
@@ -89,12 +93,15 @@ public class AuthServlet extends HttpServlet {
         newUser.setName(name);
         newUser.setEmail(email);
         newUser.setPasswordHash(PasswordUtil.hashPassword(password));
-        newUser.setPhoneNumber(phone);
+        newUser.setPhoneNumber(phone != null ? phone.trim() : null);
         newUser.setRole("USER");
 
         boolean success = userDAO.registerUser(newUser);
 
         if (success) {
+            final String finalEmail = email;
+            final String finalName = name;
+            new Thread(() -> EmailUtil.sendWelcomeEmail(finalEmail, finalName)).start();
             response.sendRedirect("login.jsp?message=Registration successful. Please login.");
         } else {
             response.sendRedirect("register.jsp?error=Registration failed. Please try again.");

@@ -12,6 +12,7 @@ import org.json.JSONObject;
 import com.proteingallery.dao.OrderDAO;
 import com.proteingallery.util.AppConfig;
 import com.proteingallery.util.DBConnection;
+import com.proteingallery.util.EmailUtil;
 import com.razorpay.Order;
 import com.razorpay.RazorpayClient;
 import com.razorpay.RazorpayException;
@@ -100,11 +101,12 @@ public class PaymentServlet extends HttpServlet {
                     orderDAO.updateOrderStatus(dbOrderId, "CONFIRMED");
                     insertPaymentRecord(dbOrderId, razorpayPaymentId, "SUCCESS");
                     deductStockForOrder(dbOrderId);
-                    sendConfirmationEmail(dbOrderId);
+                    new Thread(() -> EmailUtil.sendOrderConfirmation(dbOrderId)).start();
                     response.sendRedirect(request.getContextPath() + "/order-success.jsp?orderId=" + dbOrderId);
                 } else {
                     orderDAO.updateOrderStatus(dbOrderId, "FAILED");
                     insertPaymentRecord(dbOrderId, razorpayPaymentId, "FAILED");
+                    new Thread(() -> EmailUtil.sendOrderStatusUpdate(dbOrderId, "FAILED")).start();
                     response.sendRedirect(request.getContextPath() + "/checkout.jsp?error=Payment+Verification+Failed");
                 }
             } catch (Exception e) {
@@ -168,23 +170,6 @@ public class PaymentServlet extends HttpServlet {
     }
 
     public static void sendConfirmationEmail(int orderId) {
-        String sql = "SELECT o.total_amount, o.shipping_address, u.email FROM orders o JOIN users u ON o.user_id = u.id WHERE o.id = ?";
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, orderId);
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    String totalAmount = rs.getBigDecimal("total_amount").toString();
-                    String address = rs.getString("shipping_address");
-                    String email = rs.getString("email");
-                    
-                    new Thread(() -> {
-                        com.proteingallery.util.EmailUtil.sendOrderConfirmation(email, orderId, totalAmount, address);
-                    }).start();
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        new Thread(() -> EmailUtil.sendOrderConfirmation(orderId)).start();
     }
 }

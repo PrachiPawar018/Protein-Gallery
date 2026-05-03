@@ -23,6 +23,7 @@ com\proteingallery\dao\OrderDAO.class
 com\proteingallery\controller\OrderServlet.class
 com\proteingallery\model\OrderItem.class
 com\proteingallery\util\EmailUtil.class
+com\proteingallery\filter\SecurityHeadersFilter.class
 com\proteingallery\model\Coupon.class
 com\proteingallery\dao\CouponDAO.class
 com\proteingallery\util\DBConnection.class

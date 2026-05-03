@@ -1,5 +1,6 @@
 function updateCartCount() {
-    fetch('cart/count', {
+    const cartCountUrl = `${window.contextPath}/cart/count`;
+    fetch(cartCountUrl, {
         headers: { 'X-Requested-With': 'XMLHttpRequest' }
     })
     .then(response => response.json())
@@ -25,7 +26,7 @@ function updateQuantity(cartId, quantity) {
     formData.append('quantity', quantity);
     formData.append('csrf_token', window.csrfToken || '');
 
-    fetch('cart/update', {
+    fetch(`${window.contextPath}/cart/update`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -46,7 +47,7 @@ function removeItem(cartId) {
     formData.append('cartId', cartId);
     formData.append('csrf_token', window.csrfToken || '');
 
-    fetch('cart/remove', {
+    fetch(`${window.contextPath}/cart/remove`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',

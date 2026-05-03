@@ -15,6 +15,7 @@ import com.proteingallery.model.Coupon;
 import com.proteingallery.model.Order;
 import com.proteingallery.model.OrderItem;
 import com.proteingallery.model.User;
+import com.proteingallery.util.EmailUtil;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -154,7 +155,7 @@ public class OrderServlet extends HttpServlet {
                 } else {
                     orderDAO.updateOrderStatus(orderId, "CONFIRMED");
                     PaymentServlet.deductStockForOrder(orderId);
-                    PaymentServlet.sendConfirmationEmail(orderId);
+                    new Thread(() -> EmailUtil.sendOrderConfirmation(orderId)).start();
                     response.sendRedirect(request.getContextPath() + "/order-success.jsp?orderId=" + orderId);
                 }
             } else {

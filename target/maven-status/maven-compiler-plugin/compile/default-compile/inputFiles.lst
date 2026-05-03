@@ -17,6 +17,7 @@ C:\Users\ASUS\OneDrive\Documents\GitHub\Protein-Gallery\src\main\java\com\protei
 C:\Users\ASUS\OneDrive\Documents\GitHub\Protein-Gallery\src\main\java\com\proteingallery\filter\AdminAuthFilter.java
 C:\Users\ASUS\OneDrive\Documents\GitHub\Protein-Gallery\src\main\java\com\proteingallery\filter\CsrfFilter.java
 C:\Users\ASUS\OneDrive\Documents\GitHub\Protein-Gallery\src\main\java\com\proteingallery\filter\LoginCheckFilter.java
+C:\Users\ASUS\OneDrive\Documents\GitHub\Protein-Gallery\src\main\java\com\proteingallery\filter\SecurityHeadersFilter.java
 C:\Users\ASUS\OneDrive\Documents\GitHub\Protein-Gallery\src\main\java\com\proteingallery\model\CartItem.java
 C:\Users\ASUS\OneDrive\Documents\GitHub\Protein-Gallery\src\main\java\com\proteingallery\model\Coupon.java
 C:\Users\ASUS\OneDrive\Documents\GitHub\Protein-Gallery\src\main\java\com\proteingallery\model\Order.java

@@ -1,103 +1,315 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="jakarta.tags.core" prefix="c" %>
 <%@ taglib uri="jakarta.tags.functions" prefix="fn" %>
+<%@ taglib uri="jakarta.tags.fmt" prefix="fmt" %>
 
-<!-- Product Card Component -->
-<div class="product-card" data-product-id="${product.id}">
-    <div class="product-image-container">
-        <c:choose>
-            <c:when test="${not empty product.imageUrl}">
-                <img src="${product.imageUrl}" alt="${product.name}" class="product-image" loading="lazy">
-            </c:when>
-            <c:otherwise>
-                <div class="product-image-placeholder">
-                    <span class="placeholder-icon">🏋️</span>
-                    <span class="placeholder-text">No Image</span>
-                </div>
-            </c:otherwise>
-        </c:choose>
+<div class="product-card">
 
-        <c:if test="${product.discountPercent > 0}">
-            <div class="discount-badge">-${product.discountPercent}%</div>
-        </c:if>
+  <!-- Image container -->
+  <div class="product-img-wrap">
+    <img src="${product.imageUrl}"
+         alt="${fn:escapeXml(product.name)}"
+         loading="lazy"
+         class="product-img"
+         onerror="this.style.display='none'">
 
-        <c:if test="${product.stock <= 5 && product.stock > 0}">
-            <div class="stock-warning">Only ${product.stock} left!</div>
-        </c:if>
+    <!-- Badges -->
+    <c:if test="${product.discountPercent > 0}">
+      <span class="product-badge discount">
+        ${product.discountPercent}% OFF
+      </span>
+    </c:if>
+    <c:if test="${product.stock < 10 && product.stock > 0}">
+      <span class="product-badge low-stock">
+        Only ${product.stock} left!
+      </span>
+    </c:if>
+    <c:if test="${product.stock == 0}">
+      <span class="product-badge out-of-stock">
+        Out of Stock
+      </span>
+    </c:if>
 
-        <c:if test="${product.stock == 0}">
-            <div class="out-of-stock">Out of Stock</div>
-        </c:if>
+    <!-- Wishlist button -->
+    <button class="wishlist-btn"
+            data-id="${product.id}">♡</button>
+
+    <!-- Quick view on hover -->
+    <div class="product-overlay">
+      <a href="${pageContext.request.contextPath}/products/detail?id=${product.id}"
+         class="quick-view-btn">
+        Quick View 👁
+      </a>
+    </div>
+  </div>
+
+  <!-- Product info -->
+  <div class="product-info">
+    <span class="product-brand">
+      ${fn:escapeXml(product.brand)}
+    </span>
+    <h3 class="product-name">
+      <a href="${pageContext.request.contextPath}/products/detail?id=${product.id}">
+        ${fn:escapeXml(product.name)}
+      </a>
+    </h3>
+
+    <!-- Stars -->
+    <div class="product-rating">
+      <span class="stars">
+        <c:forEach begin="1" end="5" var="i">
+          <c:choose>
+            <c:when test="${product.ratingAvg >= i}">★</c:when>
+            <c:otherwise>☆</c:otherwise>
+          </c:choose>
+        </c:forEach>
+      </span>
+      <span class="rating-num">
+        ${product.ratingAvg}
+      </span>
     </div>
 
-    <div class="product-info">
-        <div class="product-category">${product.category}</div>
-        <c:if test="${not empty product.brand}">
-            <div class="product-brand">${product.brand}</div>
-        </c:if>
+    <!-- Price -->
+    <div class="product-price">
+      <c:if test="${product.discountPercent > 0}">
+        <span class="price-original">
+          ₹<fmt:formatNumber value="${product.price}" pattern="#,##0"/>
+        </span>
+      </c:if>
+      <span class="price-current">
+        ₹<fmt:formatNumber value="${product.price * (1 - product.discountPercent/100)}" pattern="#,##0"/>
+      </span>
+      <c:if test="${product.discountPercent > 0}">
+        <span class="price-save">
+          Save ₹<fmt:formatNumber value="${product.price * product.discountPercent/100}" pattern="#,##0"/>
+        </span>
+      </c:if>
+    </div>
 
-        <h3 class="product-title">
-            <a href="${pageContext.request.contextPath}/product-detail?id=${product.id}">${product.name}</a>
-        </h3>
+    <!-- Add to Cart -->
+    <button class="btn-add-cart"
+            data-id="${product.id}"
+            ${product.stock == 0 ? 'disabled' : ''}>
+      <c:choose>
+        <c:when test="${product.stock == 0}">
+          Out of Stock
+        </c:when>
+        <c:otherwise>
+          🛒 Add to Cart
+        </c:otherwise>
+      </c:choose>
+    </button>
+  </div>
+</div>
 
-        <div class="product-rating">
-            <div class="stars">
-                <c:forEach begin="1" end="5" var="i">
-                    <c:choose>
-                        <c:when test="${product.ratingAvg >= i}">
-                            <span class="star filled">★</span>
-                        </c:when>
-                        <c:when test="${product.ratingAvg >= i - 0.5}">
-                            <span class="star half">★</span>
-                        </c:when>
-                        <c:otherwise>
-                            <span class="star">☆</span>
-                        </c:otherwise>
-                    </c:choose>
-                </c:forEach>
-            </div>
-            <span class="rating-text">(${product.reviewCount})</span>
-        </div>
+<style>
+.product-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    position: relative;
+}
 
-        <c:if test="${not empty product.description && fn:length(product.description) > 0}">
-            <p class="product-description">
-                ${fn:substring(product.description, 0, 100)}${fn:length(product.description) > 100 ? '...' : ''}
-            </p>
-        </c:if>
+.product-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(255,107,53,0.4);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4),
+                0 0 30px rgba(255,107,53,0.1);
+}
 
-        <div class="product-price">
-            <c:if test="${product.discountPercent > 0}">
-                <span class="original-price">$${product.price}</span>
-                <span class="discounted-price">$${product.finalPrice}</span>
-            </c:if>
-            <c:if test="${product.discountPercent == 0}">
-                <span class="current-price">$${product.price}</span>
-            </c:if>
-        </div>
+.product-img-wrap {
+    position: relative;
+    aspect-ratio: 1;
+    overflow: hidden;
+    background: linear-gradient(
+        135deg, #1E1E3A, #252545);
+}
 
-        <div class="product-actions">
-            <c:choose>
-                <c:when test="${product.stock > 0}">
-                    <button class="btn-add-to-cart" onclick="addToCart(${product.id})">
-                        <span class="cart-icon">🛒</span>
-                        Add to Cart
-                    </button>
-                </c:when>
-                <c:otherwise>
-                    <button class="btn-out-of-stock" disabled>
-                        Out of Stock
-                    </button>
-                </c:otherwise>
-            </c:choose>
+.product-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
 
-            <button class="btn-wishlist" onclick="toggleWishlist(${product.id})">
-                <span class="wishlist-icon">❤️</span>
-            </button>
-        </div>
+.product-card:hover .product-img {
+    transform: scale(1.08);
+}
 
-        <c:if test="${not empty product.nutritionInfo && fn:length(product.nutritionInfo) > 0}">
-            <div class="product-nutrition">
-                <button class="nutrition-toggle" onclick="toggleNutrition(this)">
+.product-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.product-badge.discount   {
+    background: #FF6B35;
+    color: white;
+}
+.product-badge.low-stock  {
+    background: #F4D03F;
+    color: #1A1A2E;
+}
+.product-badge.out-of-stock {
+    background: #E74C3C;
+    color: white;
+}
+
+.wishlist-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: rgba(26,26,46,0.8);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: #B0B8C4;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 16px;
+    backdrop-filter: blur(4px);
+}
+
+.wishlist-btn:hover,
+.wishlist-btn.active {
+    background: rgba(231,76,60,0.2);
+    border-color: #E74C3C;
+    color: #E74C3C;
+}
+
+.product-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(26,26,46,0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    backdrop-filter: blur(4px);
+}
+
+.product-card:hover .product-overlay {
+    opacity: 1;
+}
+
+.quick-view-btn {
+    background: white;
+    color: #1A1A2E;
+    padding: 10px 20px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 13px;
+    transition: all 0.3s ease;
+}
+
+.quick-view-btn:hover {
+    background: #FF6B35;
+    color: white;
+}
+
+.product-info { padding: 16px; }
+
+.product-brand {
+    color: #FF6B35;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.product-name {
+    margin: 6px 0 8px;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+.product-name a {
+    color: white;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.product-name a:hover { color: #FF6B35; }
+
+.product-rating {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 12px;
+}
+
+.stars { color: #F4D03F; font-size: 13px; }
+.rating-num {
+    color: #B0B8C4;
+    font-size: 13px;
+}
+
+.product-price {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+}
+
+.price-current {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: white;
+}
+
+.price-original {
+    font-size: 14px;
+    color: #B0B8C4;
+    text-decoration: line-through;
+}
+
+.price-save {
+    font-size: 12px;
+    color: #27AE60;
+    font-weight: 600;
+}
+
+.btn-add-cart {
+    width: 100%;
+    background: linear-gradient(
+        135deg, #FF6B35, #E55A25);
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.btn-add-cart:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px rgba(255,107,53,0.4);
+}
+
+.btn-add-cart:disabled {
+    background: #2A2A4A;
+    color: #B0B8C4;
+    cursor: not-allowed;
+}
+</style>
                     View Nutrition Facts
                 </button>
                 <div class="nutrition-content" style="display: none;">
