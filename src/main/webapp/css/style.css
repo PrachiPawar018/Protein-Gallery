@@ -1005,7 +1005,7 @@ textarea {
     border-color: var(--primary-color);
 }
 
-.btn-primary {
+.auth-card .btn-primary {
     width: 100%;
     padding: 0.75rem;
     border: none;

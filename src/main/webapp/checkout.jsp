@@ -134,7 +134,7 @@
                <div class="alert alert-error"><%= error %></div>
             <% } %>
 
-            <form action="checkout/process" method="POST" id="checkoutForm">
+            <form action="${pageContext.request.contextPath}/checkout/process" method="POST" id="checkoutForm">
                 <input type="hidden" name="coupon_code" id="applied_coupon" value="">
                 <input type="hidden" name="csrf_token" value="${sessionScope.csrf_token}">
                 
@@ -219,7 +219,7 @@
             const formData = new URLSearchParams();
             formData.append('code', code);
 
-            fetch('checkout/apply-coupon', {
+            fetch(`${window.contextPath}/checkout/apply-coupon`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 body: formData

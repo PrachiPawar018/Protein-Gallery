@@ -223,7 +223,8 @@
                     ${product.nutritionInfo}
                 </div>
                 
-                <form action="cart/add" method="POST" class="action-block">
+                <form action="${pageContext.request.contextPath}/cart/add" method="POST" class="action-block">
+                    <input type="hidden" name="csrf_token" value="${sessionScope.csrf_token}">
                     <input type="hidden" name="productId" value="${product.id}">
                     <input type="number" name="quantity" value="1" min="1" max="${product.stock}" class="quantity-input" required>
                     <button type="submit" class="btn-add-cart">Add to Cart</button>
@@ -238,7 +239,8 @@
                 <c:when test="${not empty sessionScope.user}">
                     <div class="review-form">
                         <h3>Write a Review</h3>
-                        <form action="review" method="POST">
+                        <form action="${pageContext.request.contextPath}/review/submit" method="POST">
+                            <input type="hidden" name="csrf_token" value="${sessionScope.csrf_token}">
                             <input type="hidden" name="productId" value="${product.id}">
                             <select name="rating" required>
                                 <option value="" disabled selected>Select Rating</option>
