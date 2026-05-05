@@ -29,6 +29,18 @@ function showToast(message, type = 'success') {
     }, 3500);
 }
 
+function showSuccess(message) {
+    showToast(message, 'success');
+}
+
+function showError(message) {
+    showToast(message, 'error');
+}
+
+function showInfo(message) {
+    showToast(message, 'info');
+}
+
 // Auto-initialize on page load
 document.addEventListener('DOMContentLoaded', function() {
     // Create toast container if it doesn't exist
