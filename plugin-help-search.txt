@@ -1,0 +1,263 @@
+﻿
+META-INF\maven\plugin.xml:19:      <description>Generate the effective web.xml 
+for a pre-built webapp. This goal will NOT first build the webapp, it must 
+already exist.</description>
+META-INF\maven\plugin.xml:27:      <implementation>org.eclipse.jetty.maven.plug
+in.JettyEffectiveWebXml</implementation>
+META-INF\maven\plugin.xml:52:          <description>Location of a context xml 
+configuration file whose contents will be applied to the webapp AFTER anything 
+in &lt;webApp&gt;.Optional.</description>
+META-INF\maven\plugin.xml:56:          
+<type>org.eclipse.jetty.maven.plugin.AbstractWebAppMojo$DeploymentMode</type>
+META-INF\maven\plugin.xml:62:          <name>effectiveWebXml</name>
+META-INF\maven\plugin.xml:91:          <name>forkWebXml</name>
+META-INF\maven\plugin.xml:221:          <description>A RequestLog 
+implementation to use for the webapp at runtime. Consider using instead the 
+&lt;jettyXml&gt; element to specify external jetty xml config file. 
+Optional.</description>
+META-INF\maven\plugin.xml:284:          <description>Default supported project 
+type is war packaging.</description>
+META-INF\maven\plugin.xml:330:          <name>webApp</name>
+META-INF\maven\plugin.xml:331:          
+<type>org.eclipse.jetty.maven.plugin.MavenWebAppContext</type>
+META-INF\maven\plugin.xml:334:          <description>An instance of 
+org.eclipse.jetty.webapp.WebAppContext that represents the webapp. Use any of 
+its setters to configure the webapp. This is the preferred and most flexible 
+method of configuration, rather than using the (deprecated) individual 
+parameters like &quot;tmpDirectory&quot;, &quot;contextPath&quot; 
+etc.</description>
+META-INF\maven\plugin.xml:337:          <name>webAppSourceDirectory</name>
+META-INF\maven\plugin.xml:341:          <description>Default root directory 
+for all html/jsp etc files. Used to initialize 
+webApp.setBaseResource().</description>
+META-INF\maven\plugin.xml:344:          <name>webXml</name>
+META-INF\maven\plugin.xml:348:          <description>The default location of 
+the web.xml file. Will be used if &lt;webApp&gt;&lt;descriptor&gt; is not 
+set.</description>
+META-INF\maven\plugin.xml:353:        <deployMode implementation="org.eclipse.j
+etty.maven.plugin.AbstractWebAppMojo$DeploymentMode" 
+default-value="EMBED">${jetty.deployMode}</deployMode>
+META-INF\maven\plugin.xml:354:        <effectiveWebXml 
+implementation="java.io.File" 
+default-value="${project.build.directory}/effective-web.xml"/>
+META-INF\maven\plugin.xml:356:        <forkWebXml 
+implementation="java.io.File" 
+default-value="${project.build.directory}/fork-web.xml"/>
+META-INF\maven\plugin.xml:374:        <webAppSourceDirectory 
+implementation="java.io.File" 
+default-value="${project.basedir}/src/main/webapp"/>
+META-INF\maven\plugin.xml:375:        <webXml implementation="java.io.File" 
+default-value="${project.baseDir}/src/main/webapp/WEB-INF/web.xml"/>
+META-INF\maven\plugin.xml:438:      <description>This goal is used in-situ on 
+a Maven project without first requiring that the project is assembled into a 
+war, saving time during the development cycle. 
+META-INF\maven\plugin.xml:443:You can configure this goal to run your 
+unassembled webapp either in-process with maven, or forked into a new process, 
+or deployed into a jetty distribution.
+META-INF\maven\plugin.xml:478:          <description>Location of a context xml 
+configuration file whose contents will be applied to the webapp AFTER anything 
+in &lt;webApp&gt;.Optional.</description>
+META-INF\maven\plugin.xml:482:          
+<type>org.eclipse.jetty.maven.plugin.AbstractWebAppMojo$DeploymentMode</type>
+META-INF\maven\plugin.xml:510:          <name>forkWebXml</name>
+META-INF\maven\plugin.xml:640:          <description>A RequestLog 
+implementation to use for the webapp at runtime. Consider using instead the 
+&lt;jettyXml&gt; element to specify external jetty xml config file. 
+Optional.</description>
+META-INF\maven\plugin.xml:647:          <description>Controls redeployment of 
+the webapp. 
+META-INF\maven\plugin.xml:713:          <description>Default supported project 
+type is war packaging.</description>
+META-INF\maven\plugin.xml:759:          <name>webApp</name>
+META-INF\maven\plugin.xml:760:          
+<type>org.eclipse.jetty.maven.plugin.MavenWebAppContext</type>
+META-INF\maven\plugin.xml:763:          <description>An instance of 
+org.eclipse.jetty.webapp.WebAppContext that represents the webapp. Use any of 
+its setters to configure the webapp. This is the preferred and most flexible 
+method of configuration, rather than using the (deprecated) individual 
+parameters like &quot;tmpDirectory&quot;, &quot;contextPath&quot; 
+etc.</description>
+META-INF\maven\plugin.xml:766:          <name>webAppSourceDirectory</name>
+META-INF\maven\plugin.xml:770:          <description>Default root directory 
+for all html/jsp etc files. Used to initialize 
+webApp.setBaseResource().</description>
+META-INF\maven\plugin.xml:773:          <name>webXml</name>
+META-INF\maven\plugin.xml:777:          <description>The default location of 
+the web.xml file. Will be used if &lt;webApp&gt;&lt;descriptor&gt; is not 
+set.</description>
+META-INF\maven\plugin.xml:782:        <deployMode implementation="org.eclipse.j
+etty.maven.plugin.AbstractWebAppMojo$DeploymentMode" 
+default-value="EMBED">${jetty.deployMode}</deployMode>
+META-INF\maven\plugin.xml:784:        <forkWebXml 
+implementation="java.io.File" 
+default-value="${project.build.directory}/fork-web.xml"/>
+META-INF\maven\plugin.xml:803:        <webAppSourceDirectory 
+implementation="java.io.File" 
+default-value="${project.basedir}/src/main/webapp"/>
+META-INF\maven\plugin.xml:804:        <webXml implementation="java.io.File" 
+default-value="${project.baseDir}/src/main/webapp/WEB-INF/web.xml"/>
+META-INF\maven\plugin.xml:814:      <goal>run-war</goal>
+META-INF\maven\plugin.xml:816:This goal is used to assemble your webapp into a 
+war and automatically deploy it to Jetty.
+META-INF\maven\plugin.xml:818:Once invoked, the plugin runs continuously and 
+can be configured to scan for changes in the project and to the war file and 
+automatically perform a hot redeploy when necessary.
+META-INF\maven\plugin.xml:822:You can configure this goal to run your webapp 
+either in-process with maven, or forked into a new process, or deployed into a 
+jetty distribution.
+META-INF\maven\plugin.xml:832:      
+<implementation>org.eclipse.jetty.maven.plugin.JettyRunWarMojo</implementation>
+META-INF\maven\plugin.xml:850:          <description>Location of a context xml 
+configuration file whose contents will be applied to the webapp AFTER anything 
+in &lt;webApp&gt;.Optional.</description>
+META-INF\maven\plugin.xml:854:          
+<type>org.eclipse.jetty.maven.plugin.AbstractWebAppMojo$DeploymentMode</type>
+META-INF\maven\plugin.xml:882:          <name>forkWebXml</name>
+META-INF\maven\plugin.xml:1012:          <description>A RequestLog 
+implementation to use for the webapp at runtime. Consider using instead the 
+&lt;jettyXml&gt; element to specify external jetty xml config file. 
+Optional.</description>
+META-INF\maven\plugin.xml:1068:          <description>Default supported 
+project type is war packaging.</description>
+META-INF\maven\plugin.xml:1107:          <name>webApp</name>
+META-INF\maven\plugin.xml:1108:          
+<type>org.eclipse.jetty.maven.plugin.MavenWebAppContext</type>
+META-INF\maven\plugin.xml:1111:          <description>An instance of 
+org.eclipse.jetty.webapp.WebAppContext that represents the webapp. Use any of 
+its setters to configure the webapp. This is the preferred and most flexible 
+method of configuration, rather than using the (deprecated) individual 
+parameters like &quot;tmpDirectory&quot;, &quot;contextPath&quot; 
+etc.</description>
+META-INF\maven\plugin.xml:1115:        <deployMode implementation="org.eclipse.
+jetty.maven.plugin.AbstractWebAppMojo$DeploymentMode" 
+default-value="EMBED">${jetty.deployMode}</deployMode>
+META-INF\maven\plugin.xml:1117:        <forkWebXml 
+implementation="java.io.File" 
+default-value="${project.build.directory}/fork-web.xml"/>
+META-INF\maven\plugin.xml:1146:This goal is similar to the jetty:run goal in 
+that it it starts jetty on an unassembled webapp, EXCEPT that it is designed 
+to be bound to an execution inside your pom. Thus, this goal does NOT run a 
+parallel build cycle, so you must be careful to ensure that you bind it to a 
+phase in which all necessary generated files and classes for the webapp have 
+been created.
+META-INF\maven\plugin.xml:1148:This goal will NOT scan for changes in either 
+the webapp project or any scanTargets or scanTargetPatterns.
+META-INF\maven\plugin.xml:1150:You can configure this goal to run your webapp 
+either in-process with maven, or forked into a new process, or deployed into a 
+jetty distribution.
+META-INF\maven\plugin.xml:1184:          <description>Location of a context 
+xml configuration file whose contents will be applied to the webapp AFTER 
+anything in &lt;webApp&gt;.Optional.</description>
+META-INF\maven\plugin.xml:1188:          
+<type>org.eclipse.jetty.maven.plugin.AbstractWebAppMojo$DeploymentMode</type>
+META-INF\maven\plugin.xml:1216:          <name>forkWebXml</name>
+META-INF\maven\plugin.xml:1346:          <description>A RequestLog 
+implementation to use for the webapp at runtime. Consider using instead the 
+&lt;jettyXml&gt; element to specify external jetty xml config file. 
+Optional.</description>
+META-INF\maven\plugin.xml:1409:          <description>Default supported 
+project type is war packaging.</description>
+META-INF\maven\plugin.xml:1455:          <name>webApp</name>
+META-INF\maven\plugin.xml:1456:          
+<type>org.eclipse.jetty.maven.plugin.MavenWebAppContext</type>
+META-INF\maven\plugin.xml:1459:          <description>An instance of 
+org.eclipse.jetty.webapp.WebAppContext that represents the webapp. Use any of 
+its setters to configure the webapp. This is the preferred and most flexible 
+method of configuration, rather than using the (deprecated) individual 
+parameters like &quot;tmpDirectory&quot;, &quot;contextPath&quot; 
+etc.</description>
+META-INF\maven\plugin.xml:1462:          <name>webAppSourceDirectory</name>
+META-INF\maven\plugin.xml:1466:          <description>Default root directory 
+for all html/jsp etc files. Used to initialize 
+webApp.setBaseResource().</description>
+META-INF\maven\plugin.xml:1469:          <name>webXml</name>
+META-INF\maven\plugin.xml:1473:          <description>The default location of 
+the web.xml file. Will be used if &lt;webApp&gt;&lt;descriptor&gt; is not 
+set.</description>
+META-INF\maven\plugin.xml:1478:        <deployMode implementation="org.eclipse.
+jetty.maven.plugin.AbstractWebAppMojo$DeploymentMode" 
+default-value="EMBED">${jetty.deployMode}</deployMode>
+META-INF\maven\plugin.xml:1480:        <forkWebXml 
+implementation="java.io.File" 
+default-value="${project.build.directory}/fork-web.xml"/>
+META-INF\maven\plugin.xml:1498:        <webAppSourceDirectory 
+implementation="java.io.File" 
+default-value="${project.basedir}/src/main/webapp"/>
+META-INF\maven\plugin.xml:1499:        <webXml implementation="java.io.File" 
+default-value="${project.baseDir}/src/main/webapp/WEB-INF/web.xml"/>
+META-INF\maven\plugin.xml:1509:      <goal>start-war</goal>
+META-INF\maven\plugin.xml:1511:This goal is used to run Jetty with any 
+pre-assembled war. This goal does not have to be used with a project of 
+packaging type &quot;war&quot;.
+META-INF\maven\plugin.xml:1513:You can configure the &quot;webApp&quot; 
+element with the location of either a war file or an unpacked war that you 
+wish to deploy - in either case, the webapp must be fully compiled and 
+assembled as this goal does not do anything other than start jetty with the 
+given webapp. If you do not configure the &quot;webApp&quot; element, then the 
+goal will default to using the war of the webapp project.
+META-INF\maven\plugin.xml:1519:You can configure this goal to run the webapp 
+either in-process with maven, or forked into a new process, or deployed into a 
+${jetty.base} directory.
+META-INF\maven\plugin.xml:1528:      <implementation>org.eclipse.jetty.maven.pl
+ugin.JettyStartWarMojo</implementation>
+META-INF\maven\plugin.xml:1546:          <description>Location of a context 
+xml configuration file whose contents will be applied to the webapp AFTER 
+anything in &lt;webApp&gt;.Optional.</description>
+META-INF\maven\plugin.xml:1550:          
+<type>org.eclipse.jetty.maven.plugin.AbstractWebAppMojo$DeploymentMode</type>
+META-INF\maven\plugin.xml:1578:          <name>forkWebXml</name>
+META-INF\maven\plugin.xml:1708:          <description>A RequestLog 
+implementation to use for the webapp at runtime. Consider using instead the 
+&lt;jettyXml&gt; element to specify external jetty xml config file. 
+Optional.</description>
+META-INF\maven\plugin.xml:1757:          <description>Default supported 
+project type is war packaging.</description>
+META-INF\maven\plugin.xml:1796:          <name>webApp</name>
+META-INF\maven\plugin.xml:1797:          
+<type>org.eclipse.jetty.maven.plugin.MavenWebAppContext</type>
+META-INF\maven\plugin.xml:1800:          <description>An instance of 
+org.eclipse.jetty.webapp.WebAppContext that represents the webapp. Use any of 
+its setters to configure the webapp. This is the preferred and most flexible 
+method of configuration, rather than using the (deprecated) individual 
+parameters like &quot;tmpDirectory&quot;, &quot;contextPath&quot; 
+etc.</description>
+META-INF\maven\plugin.xml:1803:          <name>webAppSourceDirectory</name>
+META-INF\maven\plugin.xml:1811:        <deployMode implementation="org.eclipse.
+jetty.maven.plugin.AbstractWebAppMojo$DeploymentMode" 
+default-value="EMBED">${jetty.deployMode}</deployMode>
+META-INF\maven\plugin.xml:1813:        <forkWebXml 
+implementation="java.io.File" 
+default-value="${project.build.directory}/fork-web.xml"/>
+META-INF\maven\plugin.xml:1830:        <webAppSourceDirectory 
+implementation="java.io.File" 
+default-value="${project.baseDir}/src/main/webapp"/>
+META-INF\maven\plugin.xml:1866:          <description>Location of a context 
+xml configuration file whose contents will be applied to the webapp AFTER 
+anything in &lt;webApp&gt;.Optional.</description>
+META-INF\maven\plugin.xml:1870:          
+<type>org.eclipse.jetty.maven.plugin.AbstractWebAppMojo$DeploymentMode</type>
+META-INF\maven\plugin.xml:1898:          <name>forkWebXml</name>
+META-INF\maven\plugin.xml:2028:          <description>A RequestLog 
+implementation to use for the webapp at runtime. Consider using instead the 
+&lt;jettyXml&gt; element to specify external jetty xml config file. 
+Optional.</description>
+META-INF\maven\plugin.xml:2084:          <description>Default supported 
+project type is war packaging.</description>
+META-INF\maven\plugin.xml:2123:          <name>webApp</name>
+META-INF\maven\plugin.xml:2124:          
+<type>org.eclipse.jetty.maven.plugin.MavenWebAppContext</type>
+META-INF\maven\plugin.xml:2127:          <description>An instance of 
+org.eclipse.jetty.webapp.WebAppContext that represents the webapp. Use any of 
+its setters to configure the webapp. This is the preferred and most flexible 
+method of configuration, rather than using the (deprecated) individual 
+parameters like &quot;tmpDirectory&quot;, &quot;contextPath&quot; 
+etc.</description>
+META-INF\maven\plugin.xml:2131:        <deployMode implementation="org.eclipse.
+jetty.maven.plugin.AbstractWebAppMojo$DeploymentMode" 
+default-value="EMBED">${jetty.deployMode}</deployMode>
+META-INF\maven\plugin.xml:2133:        <forkWebXml 
+implementation="java.io.File" 
+default-value="${project.build.directory}/fork-web.xml"/>
+META-INF\maven\plugin.xml:2228:      <artifactId>jetty-webapp</artifactId>
+
+
