@@ -14,14 +14,27 @@
             <a href="index.html">Home</a>
             <a href="shop.html">Shop</a>
             <a href="cart.html" class="active">Cart</a>
+            <a href="orders.html">Orders</a>
+            <a href="profile.html">Profile</a>
+            <a href="admin.html" id="navAdmin" style="display:none;">Admin</a>
         </nav>
+        <div class="nav-actions">
+            <div id="navAuth" class="nav-auth">
+                <a class="btn-secondary" href="login.html">Login</a>
+                <a class="btn-primary" href="register.html">Sign Up</a>
+            </div>
+            <div id="navUser" class="user-menu" style="display:none; gap:12px; align-items:center;">
+                <span class="user-name"></span>
+                <button class="btn-secondary" id="logoutButton">Logout</button>
+            </div>
+        </div>
     </div>
 </header>
 <div id="toast-container"></div>
 <main class="container page-header">
     <div class="section-header">
         <h1 class="section-title">Your cart</h1>
-        <p class="section-subtitle">Review your selected items and update quantities before checkout.</p>
+        <p class="section-subtitle">Review everything before you checkout with one smooth payment flow.</p>
     </div>
     <div id="cartContent"></div>
 </main>
@@ -38,18 +51,20 @@
         const rows = items.map(item => {
             total += item.totalPrice;
             return `
-                <div class="card" style="display:flex; gap:20px; align-items:center; flex-wrap:wrap;">
-                    <img src="${item.imageUrl}" alt="${item.productName}" style="width:120px; border-radius:18px; object-fit:cover;" />
-                    <div style="flex:1; min-width:200px;">
+                <div class="card cart-item-card">
+                    <div class="cart-item-preview">
+                        <img src="${item.imageUrl}" alt="${item.productName}" />
+                    </div>
+                    <div class="cart-item-info">
                         <h3>${item.productName}</h3>
-                        <p style="color:var(--muted);">${formatCurrency(item.unitPrice)} each</p>
-                        <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap; margin-top:12px;">
-                            <input class="text-field" type="number" min="1" value="${item.quantity}" id="qty-${item.id}" style="width:100px;" />
-                            <button class="btn-secondary" onclick="updateQuantity(${item.id})">Update</button>
-                            <button class="btn-secondary" onclick="removeItem(${item.id})">Remove</button>
+                        <p class="muted">${formatCurrency(item.unitPrice)} each</p>
+                        <div class="input-row" style="align-items:center; gap:14px; margin-top:14px;">
+                            <input class="text-field" type="number" min="1" value="${item.quantity}" id="qty-${item.id}" />
+                            <button class="btn-secondary" type="button" onclick="updateQuantity(${item.id})">Update</button>
+                            <button class="btn-secondary" type="button" onclick="removeItem(${item.id})">Remove</button>
                         </div>
                     </div>
-                    <div style="text-align:right; min-width:120px;">
+                    <div class="cart-item-price">
                         <div class="price-tag">${formatCurrency(item.totalPrice)}</div>
                     </div>
                 </div>
@@ -57,10 +72,10 @@
         }).join('');
         container.innerHTML = `
             <div class="product-detail">
-                <div style="width: 100%;">${rows}</div>
+                <div class="cart-items" style="width: 100%;">${rows}</div>
                 <div class="summary-card card">
                     <h3>Order summary</h3>
-                    <p style="margin:0; color:var(--muted);">Total for ${items.length} items.</p>
+                    <p class="muted">Total for ${items.length} items.</p>
                     <div class="price-tag" style="margin-top:24px;">${formatCurrency(total)}</div>
                     <a class="btn-primary" href="checkout.html" style="margin-top:24px; display:inline-block;">Checkout now</a>
                 </div>

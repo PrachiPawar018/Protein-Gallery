@@ -67,9 +67,11 @@
                 <artifactId>jetty-maven-plugin</artifactId>
                 <version>11.0.15</version>
                 <configuration>
+                    <contextPath>/</contextPath>
                     <httpConnector>
                         <port>${jetty.http.port}</port>
                     </httpConnector>
+                    <webAppSourceDirectory>${project.basedir}/WebContent</webAppSourceDirectory>
                 </configuration>
             </plugin>
         </plugins>

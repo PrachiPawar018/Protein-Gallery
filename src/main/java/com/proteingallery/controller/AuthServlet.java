@@ -1,5 +1,8 @@
 package com.proteingallery.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+
 import com.proteingallery.dao.UserDAO;
 import com.proteingallery.model.User;
 import com.proteingallery.util.JsonUtil;
@@ -10,9 +13,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-
-import java.io.IOException;
-import java.io.PrintWriter;
 
 public class AuthServlet extends HttpServlet {
 
@@ -31,16 +31,13 @@ public class AuthServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String path = request.getPathInfo();
-        if (path == null || "/login".equals(path)) {
-            login(request, response);
-        } else if ("/register".equals(path)) {
-            register(request, response);
-        } else if ("/logout".equals(path)) {
-            logout(request, response);
-        } else if ("/change-password".equals(path)) {
-            changePassword(request, response);
-        } else {
-            response.sendError(HttpServletResponse.SC_NOT_FOUND);
+        String action = path == null ? "/login" : path;
+        switch (action) {
+            case "/login" -> login(request, response);
+            case "/register" -> register(request, response);
+            case "/logout" -> logout(request, response);
+            case "/change-password" -> changePassword(request, response);
+            default -> response.sendError(HttpServletResponse.SC_NOT_FOUND);
         }
     }
 

@@ -1,5 +1,11 @@
 package com.proteingallery.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.List;
+
 import com.proteingallery.dao.CartDAO;
 import com.proteingallery.dao.OrderDAO;
 import com.proteingallery.model.CartItem;
@@ -12,12 +18,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.util.List;
 
 public class OrderServlet extends HttpServlet {
 
@@ -55,16 +55,14 @@ public class OrderServlet extends HttpServlet {
         String path = request.getPathInfo();
         response.setContentType("application/json");
         try (PrintWriter out = response.getWriter()) {
-            if ("/checkout".equals(path)) {
-                processCheckout(request, response, out, userId);
-            } else {
-                response.sendError(HttpServletResponse.SC_NOT_FOUND);
+            switch (path) {
+                case "/checkout" -> processCheckout(request, out, userId);
+                default -> response.sendError(HttpServletResponse.SC_NOT_FOUND);
             }
         }
     }
 
-    private void processCheckout(HttpServletRequest request, HttpServletResponse response, PrintWriter out, int userId) {
-        String paymentMethod = request.getParameter("paymentMethod");
+    private void processCheckout(HttpServletRequest request, PrintWriter out, int userId) {
         String shippingAddress = request.getParameter("shippingAddress");
         if (shippingAddress == null || shippingAddress.isBlank()) {
             out.print(JsonUtil.object("success:false", "message:" + JsonUtil.quote("Please enter a shipping address.")));

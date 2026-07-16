@@ -1,5 +1,9 @@
 package com.proteingallery.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.List;
+
 import com.proteingallery.dao.CartDAO;
 import com.proteingallery.model.CartItem;
 import com.proteingallery.util.JsonUtil;
@@ -9,10 +13,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.List;
 
 public class CartServlet extends HttpServlet {
 
@@ -44,22 +44,25 @@ public class CartServlet extends HttpServlet {
         String path = request.getPathInfo();
         response.setContentType("application/json");
         try (PrintWriter out = response.getWriter()) {
-            if ("/add".equals(path)) {
-                int productId = Integer.parseInt(request.getParameter("productId"));
-                int quantity = Integer.parseInt(request.getParameter("quantity"));
-                boolean success = cartDAO.addOrUpdateCartItem(userId, productId, Math.max(quantity, 1));
-                out.print(JsonUtil.object("success:" + success));
-            } else if ("/update".equals(path)) {
-                int cartId = Integer.parseInt(request.getParameter("cartId"));
-                int quantity = Integer.parseInt(request.getParameter("quantity"));
-                boolean success = cartDAO.updateQuantity(cartId, Math.max(quantity, 1));
-                out.print(JsonUtil.object("success:" + success));
-            } else if ("/remove".equals(path)) {
-                int cartId = Integer.parseInt(request.getParameter("cartId"));
-                boolean success = cartDAO.removeCartItem(cartId);
-                out.print(JsonUtil.object("success:" + success));
-            } else {
-                response.sendError(HttpServletResponse.SC_NOT_FOUND);
+            switch (path) {
+                case "/add" -> {
+                    int productId = Integer.parseInt(request.getParameter("productId"));
+                    int quantity = Integer.parseInt(request.getParameter("quantity"));
+                    boolean success = cartDAO.addOrUpdateCartItem(userId, productId, Math.max(quantity, 1));
+                    out.print(JsonUtil.object("success:" + success));
+                }
+                case "/update" -> {
+                    int cartId = Integer.parseInt(request.getParameter("cartId"));
+                    int quantity = Integer.parseInt(request.getParameter("quantity"));
+                    boolean success = cartDAO.updateQuantity(cartId, Math.max(quantity, 1));
+                    out.print(JsonUtil.object("success:" + success));
+                }
+                case "/remove" -> {
+                    int cartId = Integer.parseInt(request.getParameter("cartId"));
+                    boolean success = cartDAO.removeCartItem(cartId);
+                    out.print(JsonUtil.object("success:" + success));
+                }
+                default -> response.sendError(HttpServletResponse.SC_NOT_FOUND);
             }
         }
     }

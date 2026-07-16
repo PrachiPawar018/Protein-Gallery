@@ -1,18 +1,17 @@
 package com.proteingallery.dao;
 
-import com.proteingallery.model.Order;
-import com.proteingallery.model.OrderItem;
-import com.proteingallery.model.Product;
-import com.proteingallery.util.DBUtil;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.proteingallery.model.Order;
+import com.proteingallery.model.OrderItem;
+import com.proteingallery.model.Product;
+import com.proteingallery.util.DBUtil;
 
 public class OrderDAO {
 

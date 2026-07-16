@@ -1,5 +1,13 @@
 package com.proteingallery.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+
 import com.proteingallery.dao.ProductDAO;
 import com.proteingallery.dao.UserDAO;
 import com.proteingallery.model.Product;
@@ -12,14 +20,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.List;
 
 public class AdminServlet extends HttpServlet {
 
@@ -36,16 +36,17 @@ public class AdminServlet extends HttpServlet {
         String path = request.getPathInfo();
         response.setContentType("application/json");
         try (PrintWriter out = response.getWriter()) {
-            if ("/stats".equals(path)) {
-                out.print(getStatsJson());
-            } else if ("/users".equals(path)) {
-                List<User> users = userDAO.findAll();
-                out.print(JsonUtil.array(users.stream().map(this::userJson).toArray(String[]::new)));
-            } else if ("/products".equals(path)) {
-                List<Product> products = productDAO.findAll(null, null, null, null, null);
-                out.print(JsonUtil.array(products.stream().map(this::productJson).toArray(String[]::new)));
-            } else {
-                response.sendError(HttpServletResponse.SC_NOT_FOUND);
+            switch (path) {
+                case "/stats" -> out.print(getStatsJson());
+                case "/users" -> {
+                    List<User> users = userDAO.findAll();
+                    out.print(JsonUtil.array(users.stream().map(this::userJson).toArray(String[]::new)));
+                }
+                case "/products" -> {
+                    List<Product> products = productDAO.findAll(null, null, null, null, null);
+                    out.print(JsonUtil.array(products.stream().map(this::productJson).toArray(String[]::new)));
+                }
+                default -> response.sendError(HttpServletResponse.SC_NOT_FOUND);
             }
         }
     }

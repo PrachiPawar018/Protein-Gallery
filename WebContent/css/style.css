@@ -192,6 +192,62 @@ button, input, select, textarea {
     padding: 24px;
 }
 
+.form-panel {
+    padding: 36px;
+}
+
+.form-caption {
+    margin-top: 18px;
+    color: var(--muted);
+}
+
+.muted {
+    color: var(--muted);
+}
+
+.profile-info p {
+    margin: 12px 0;
+}
+
+.order-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 14px;
+    color: var(--muted);
+}
+
+.cart-item-card {
+    display: grid;
+    grid-template-columns: 120px 1fr auto;
+    gap: 20px;
+    align-items: center;
+    padding: 22px;
+}
+
+.cart-item-card img {
+    width: 120px;
+    height: 120px;
+    border-radius: 22px;
+    object-fit: cover;
+}
+
+.cart-item-info h3 {
+    margin: 0 0 10px;
+}
+
+.cart-item-price {
+    text-align: right;
+}
+
+.stats-grid {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+
+.stats-grid .card {
+    padding: 22px;
+}
+
 .card h3 {
     margin: 0 0 12px;
     font-size: 1.1rem;

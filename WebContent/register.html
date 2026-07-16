@@ -13,21 +13,36 @@
         <nav class="nav-links">
             <a href="index.html">Home</a>
             <a href="shop.html">Shop</a>
+            <a href="orders.html">Orders</a>
+            <a href="profile.html">Profile</a>
+            <a href="admin.html" id="navAdmin" style="display:none;">Admin</a>
         </nav>
+        <div class="nav-actions">
+            <div id="navAuth" class="nav-auth">
+                <a class="btn-secondary" href="login.html">Login</a>
+                <a class="btn-primary" href="register.html">Sign Up</a>
+            </div>
+            <div id="navUser" class="user-menu" style="display:none; gap:12px; align-items:center;">
+                <span class="user-name"></span>
+                <button class="btn-secondary" id="logoutButton">Logout</button>
+            </div>
+        </div>
     </div>
 </header>
 <div id="toast-container"></div>
 <main class="container page-header">
-    <div class="card" style="max-width:520px; margin: 0 auto;">
-        <h2>Create an account</h2>
-        <p>Register now to save your cart and order history.</p>
-        <form id="registerForm">
+    <section class="card form-panel" style="max-width:560px; margin: 0 auto;">
+        <div class="section-header">
+            <h1 class="section-title">Create your account</h1>
+            <p class="section-subtitle">Register to save orders, manage your profile, and checkout faster.</p>
+        </div>
+        <form id="registerForm" class="form-grid">
             <div class="input-group">
-                <label for="name">Name</label>
+                <label for="name">Full name</label>
                 <input class="text-field" type="text" id="name" name="name" required />
             </div>
             <div class="input-group">
-                <label for="email">Email</label>
+                <label for="email">Email address</label>
                 <input class="text-field" type="email" id="email" name="email" required />
             </div>
             <div class="input-group">
@@ -35,9 +50,9 @@
                 <input class="text-field" type="password" id="password" name="password" required />
             </div>
             <button class="btn-primary" type="submit">Register</button>
-            <p style="margin-top:18px; color:var(--muted);">Already have an account? <a href="login.html">Login</a></p>
+            <p class="form-caption">Already have an account? <a href="login.html">Login</a></p>
         </form>
-    </div>
+    </section>
 </main>
 <script src="js/main.js"></script>
 <script>
