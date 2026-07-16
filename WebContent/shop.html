@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shop | Protein Gallery</title>
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+<header class="header-bar">
+    <div class="container navbar">
+        <a class="brand" href="index.html"><span class="dot">PG</span> Protein Gallery</a>
+        <nav class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="shop.html" class="active">Shop</a>
+            <a href="cart.html">Cart</a>
+            <a href="orders.html">Orders</a>
+        </nav>
+        <div class="nav-actions">
+            <a class="btn-secondary" href="login.html">Login</a>
+            <a class="btn-primary" href="register.html">Sign Up</a>
+        </div>
+    </div>
+</header>
+<div id="toast-container"></div>
+<main class="container page-header">
+    <div class="section-header">
+        <h1 class="section-title">Shop our collection</h1>
+        <p class="section-subtitle">Filter by goal, category or price and discover the right supplement for your routine.</p>
+    </div>
+    <div class="card" style="padding:28px; margin-bottom:28px;">
+        <form id="shopFilterForm" class="filters">
+            <input class="text-field" type="search" name="search" id="search" placeholder="Search proteins, brands, goals" />
+            <select class="select-field" name="category" id="category">
+                <option value="">All categories</option>
+                <option value="Whey">Whey</option>
+                <option value="Creatine">Creatine</option>
+                <option value="Pre-workout">Pre-workout</option>
+            </select>
+            <select class="select-field" name="goal" id="goal">
+                <option value="">All goals</option>
+                <option value="muscle-gain">Muscle Gain</option>
+                <option value="weight-loss">Weight Loss</option>
+                <option value="beginner">Beginner</option>
+                <option value="endurance">Endurance</option>
+            </select>
+            <div class="input-row" style="width:100%;">
+                <input class="text-field" type="number" name="minPrice" id="minPrice" placeholder="Min price" />
+                <input class="text-field" type="number" name="maxPrice" id="maxPrice" placeholder="Max price" />
+            </div>
+            <button class="btn-primary" type="submit">Apply filters</button>
+        </form>
+    </div>
+    <div id="shopGrid" class="product-grid"></div>
+</main>
+<footer class="footer">
+    <div class="container footer-grid">
+        <div><p><strong>Protein Gallery</strong></p><p>Fitness nutrition made simple.</p></div>
+        <div><p><strong>Support</strong></p><p><a href="mailto:support@proteingallery.com">support@proteingallery.com</a></p></div>
+    </div>
+</footer>
+<script src="js/main.js"></script>
+<script>
+    const params = parseQuery();
+    document.getElementById('shopFilterForm').addEventListener('submit', async event => {
+        event.preventDefault();
+        await renderProducts();
+    });
+
+    async function renderProducts() {
+        const search = document.getElementById('search').value;
+        const category = document.getElementById('category').value;
+        const goal = document.getElementById('goal').value;
+        const minPrice = document.getElementById('minPrice').value;
+        const maxPrice = document.getElementById('maxPrice').value;
+        const query = new URLSearchParams();
+        if (search) query.set('search', search);
+        if (category) query.set('category', category);
+        if (goal) query.set('goal', goal);
+        if (minPrice) query.set('minPrice', minPrice);
+        if (maxPrice) query.set('maxPrice', maxPrice);
+        const products = await fetchJson(`${api.products}?${query.toString()}`);
+        const grid = document.getElementById('shopGrid');
+        if (!Array.isArray(products) || products.length === 0) {
+            grid.innerHTML = '<p style="color:var(--muted);">No products found with the selected filters.</p>';
+            return;
+        }
+        grid.innerHTML = products.map(product => `
+            <a class="product-card" href="product.html?id=${product.id}">
+                <img src="${product.imageUrl}" alt="${product.name}" />
+                <div class="product-card-content">
+                    <span class="badge">${product.goalTag || 'Fitness'}</span>
+                    <h3>${product.name}</h3>
+                    <p>${product.description}</p>
+                    <div class="price-tag">${formatCurrency(product.price)}</div>
+                </div>
+            </a>
+        `).join('');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        if (params.goal) {
+            document.getElementById('goal').value = params.goal;
+        }
+        renderProducts();
+    });
+</script>
+</body>
+</html>

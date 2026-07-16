@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product Details | Protein Gallery</title>
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+<header class="header-bar">
+    <div class="container navbar">
+        <a class="brand" href="index.html"><span class="dot">PG</span> Protein Gallery</a>
+        <nav class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="shop.html">Shop</a>
+            <a href="cart.html">Cart</a>
+        </nav>
+    </div>
+</header>
+<div id="toast-container"></div>
+<main class="container page-header">
+    <div class="product-detail">
+        <div class="product-detail-card card" id="productDetailCard">
+            <div id="productImage"></div>
+            <div style="margin-top:24px;">
+                <p id="productCategory" class="badge"></p>
+                <h1 id="productName"></h1>
+                <p id="productDescription"></p>
+                <p id="productPrice" class="price-tag"></p>
+                <p id="productStock" style="color:var(--muted);"></p>
+                <div style="display:flex; gap:16px; flex-wrap:wrap; margin-top:24px;">
+                    <button class="btn-primary" id="addToCart">Add to cart</button>
+                    <a class="btn-secondary" href="cart.html">View cart</a>
+                </div>
+            </div>
+        </div>
+        <div class="summary-card card">
+            <h3>Nutrition facts</h3>
+            <p id="nutritionFact">High protein, low sugar, complete amino profile for recovery.</p>
+            <h3>Related benefits</h3>
+            <ul style="color:var(--muted);">
+                <li>Faster muscle recovery</li>
+                <li>Clean energy blend</li>
+                <li>Premium ingredients</li>
+            </ul>
+        </div>
+    </div>
+</main>
+<script src="js/main.js"></script>
+<script>
+    const query = parseQuery();
+    if (!query.id) {
+        document.getElementById('productDetailCard').innerHTML = '<p style="color:var(--muted);">Product ID missing.</p>';
+    }
+
+    async function loadProduct() {
+        const product = await fetchJson(`${api.products}/detail?id=${query.id}`);
+        if (!product || !product.id) {
+            document.getElementById('productDetailCard').innerHTML = '<p style="color:var(--muted);">Loading failed.</p>';
+            return;
+        }
+        document.getElementById('productImage').innerHTML = `<img src="${product.imageUrl}" alt="${product.name}" />`;
+        document.getElementById('productCategory').textContent = product.category || product.goalTag || 'Fitness';
+        document.getElementById('productName').textContent = product.name;
+        document.getElementById('productDescription').textContent = product.description;
+        document.getElementById('productPrice').textContent = formatCurrency(product.price);
+        document.getElementById('productStock').textContent = product.stock > 0 ? 'In stock' : 'Out of stock';
+        document.getElementById('addToCart').addEventListener('click', async () => {
+            const payload = new URLSearchParams();
+            payload.append('productId', product.id);
+            payload.append('quantity', '1');
+            const result = await fetchJson(`${api.cart}/add`, {
+                method: 'POST',
+                body: payload,
+            });
+            showToast(result.message || (result.success ? 'Added to cart.' : 'Unable to add cart.'), result.success ? 'success' : 'error');
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', loadProduct);
+</script>
+</body>
+</html>

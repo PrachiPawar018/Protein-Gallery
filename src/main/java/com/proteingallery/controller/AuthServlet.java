@@ -37,6 +37,8 @@ public class AuthServlet extends HttpServlet {
             register(request, response);
         } else if ("/logout".equals(path)) {
             logout(request, response);
+        } else if ("/change-password".equals(path)) {
+            changePassword(request, response);
         } else {
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
         }
@@ -110,6 +112,34 @@ public class AuthServlet extends HttpServlet {
         response.setContentType("application/json");
         try (PrintWriter out = response.getWriter()) {
             out.print(JsonUtil.object("success:true", "message:" + JsonUtil.quote("Logged out successfully.")));
+        }
+    }
+
+    private void changePassword(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        HttpSession session = request.getSession(false);
+        response.setContentType("application/json");
+        try (PrintWriter out = response.getWriter()) {
+            if (session == null || session.getAttribute("userId") == null) {
+                out.print(JsonUtil.object("success:false", "message:" + JsonUtil.quote("Please login first.")));
+                return;
+            }
+            int userId = (Integer) session.getAttribute("userId");
+            String oldPassword = request.getParameter("oldPassword");
+            String newPassword = request.getParameter("newPassword");
+            if (oldPassword == null || newPassword == null || oldPassword.isBlank() || newPassword.isBlank()) {
+                out.print(JsonUtil.object("success:false", "message:" + JsonUtil.quote("Both passwords are required.")));
+                return;
+            }
+            User user = userDAO.findById(userId);
+            if (user == null || !PasswordUtil.verify(oldPassword, user.getPasswordHash())) {
+                out.print(JsonUtil.object("success:false", "message:" + JsonUtil.quote("Current password is incorrect.")));
+                return;
+            }
+            boolean updated = userDAO.updatePassword(userId, PasswordUtil.hash(newPassword));
+            out.print(JsonUtil.object(
+                    "success:" + updated,
+                    "message:" + JsonUtil.quote(updated ? "Password updated successfully." : "Unable to update password.")
+            ));
         }
     }
 

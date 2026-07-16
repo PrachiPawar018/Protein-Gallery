@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile | Protein Gallery</title>
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+<header class="header-bar">
+    <div class="container navbar">
+        <a class="brand" href="index.html"><span class="dot">PG</span> Protein Gallery</a>
+        <nav class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="shop.html">Shop</a>
+            <a href="orders.html">Orders</a>
+            <a href="profile.html" class="active">Profile</a>
+        </nav>
+    </div>
+</header>
+<div id="toast-container"></div>
+<main class="container page-header">
+    <div class="product-detail">
+        <div class="summary-card card">
+            <h2>Your profile</h2>
+            <p id="profileInfo" style="color:var(--muted);"></p>
+        </div>
+        <div class="summary-card card">
+            <h3>Change password</h3>
+            <form id="passwordForm">
+                <div class="input-group">
+                    <label for="oldPassword">Current password</label>
+                    <input class="text-field" type="password" id="oldPassword" name="oldPassword" required />
+                </div>
+                <div class="input-group">
+                    <label for="newPassword">New password</label>
+                    <input class="text-field" type="password" id="newPassword" name="newPassword" required />
+                </div>
+                <button class="btn-primary" type="submit">Update password</button>
+            </form>
+        </div>
+    </div>
+</main>
+<script src="js/main.js"></script>
+<script>
+    async function loadProfile() {
+        const session = await getSession();
+        if (!session.authenticated) {
+            window.location.href = 'login.html';
+            return;
+        }
+        document.getElementById('profileInfo').innerHTML = `
+            <strong>Name:</strong> ${session.name}<br />
+            <strong>Email:</strong> ${session.email}<br />
+            <strong>Role:</strong> ${session.role}
+        `;
+    }
+
+    document.getElementById('passwordForm').addEventListener('submit', async event => {
+        event.preventDefault();
+        const data = new FormData(event.currentTarget);
+        const payload = new URLSearchParams();
+        data.forEach((value, key) => payload.append(key, value));
+        const result = await fetchJson(`${api.auth}/change-password`, {
+            method: 'POST',
+            body: payload,
+        });
+        showToast(result.message, result.success ? 'success' : 'error');
+    });
+
+    document.addEventListener('DOMContentLoaded', loadProfile);
+</script>
+</body>
+</html>

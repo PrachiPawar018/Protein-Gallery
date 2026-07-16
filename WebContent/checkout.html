@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Checkout | Protein Gallery</title>
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+<header class="header-bar">
+    <div class="container navbar">
+        <a class="brand" href="index.html"><span class="dot">PG</span> Protein Gallery</a>
+        <nav class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="shop.html">Shop</a>
+            <a href="cart.html">Cart</a>
+        </nav>
+    </div>
+</header>
+<div id="toast-container"></div>
+<main class="container page-header">
+    <div class="section-header">
+        <h1 class="section-title">Checkout</h1>
+        <p class="section-subtitle">Complete your order and choose your shipping details.</p>
+    </div>
+    <div class="product-detail">
+        <div class="summary-card card">
+            <h3>Shipping address</h3>
+            <form id="checkoutForm">
+                <div class="input-group"><label for="shippingAddress">Address</label><textarea class="textarea-field" id="shippingAddress" name="shippingAddress" rows="4" required></textarea></div>
+                <div class="input-group"><label>Payment method</label><select class="select-field" id="paymentMethod" name="paymentMethod"><option value="razorpay">Razorpay</option><option value="cod">Cash on Delivery</option></select></div>
+                <button class="btn-primary" type="submit">Place order</button>
+            </form>
+        </div>
+        <div class="summary-card card" id="orderSummary">
+            <h3>Order summary</h3>
+            <div id="summaryItems"></div>
+            <div id="summaryTotal" class="price-tag" style="margin-top:20px;"></div>
+        </div>
+    </div>
+</main>
+<script src="js/main.js"></script>
+<script>
+    async function renderCheckout() {
+        const items = await fetchJson(api.cart);
+        const list = document.getElementById('summaryItems');
+        if (!Array.isArray(items) || items.length === 0) {
+            list.innerHTML = '<p style="color:var(--muted);">Your cart is empty. Add items before checkout.</p>';
+            document.getElementById('checkoutForm').style.display = 'none';
+            return;
+        }
+        let total = 0;
+        list.innerHTML = items.map(item => {
+            total += item.totalPrice;
+            return `
+                <div style="display:flex; justify-content:space-between; margin-bottom:12px;">
+                    <span>${item.productName} × ${item.quantity}</span>
+                    <strong>${formatCurrency(item.totalPrice)}</strong>
+                </div>
+            `;
+        }).join('');
+        document.getElementById('summaryTotal').textContent = `Total: ${formatCurrency(total)}`;
+    }
+
+    document.getElementById('checkoutForm').addEventListener('submit', async event => {
+        event.preventDefault();
+        const form = event.currentTarget;
+        const data = new FormData(form);
+        const payload = new URLSearchParams();
+        data.forEach((value, key) => payload.append(key, value));
+        const result = await fetchJson(`${api.orders}/checkout`, {
+            method: 'POST',
+            body: payload,
+        });
+        showToast(result.message, result.success ? 'success' : 'error');
+        if (result.success) {
+            setTimeout(() => window.location.href = `order-success.html?orderId=${result.orderId}`, 900);
+        }
+    });
+
+    document.addEventListener('DOMContentLoaded', renderCheckout);
+</script>
+</body>
+</html>
