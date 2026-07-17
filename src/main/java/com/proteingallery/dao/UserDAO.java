@@ -1,14 +1,14 @@
 package com.proteingallery.dao;
 
-import com.proteingallery.model.User;
-import com.proteingallery.util.DBUtil;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.proteingallery.model.User;
+import com.proteingallery.util.DBUtil;
 
 public class UserDAO {
 
@@ -26,13 +26,15 @@ public class UserDAO {
     }
 
     public boolean createUser(User user) {
-        String sql = "INSERT INTO users (name, email, password_hash, role) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO users (name, email, password_hash, phone_number, role, is_active) VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection conn = DBUtil.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, user.getName());
             stmt.setString(2, user.getEmail());
             stmt.setString(3, user.getPasswordHash());
-            stmt.setString(4, user.getRole());
+            stmt.setString(4, user.getPhoneNumber());
+            stmt.setString(5, user.getRole());
+            stmt.setBoolean(6, user.isActive());
             int affected = stmt.executeUpdate();
             if (affected == 0) {
                 return false;
@@ -49,7 +51,7 @@ public class UserDAO {
     }
 
     public User findByEmail(String email) {
-        String sql = "SELECT id, name, email, password_hash, role FROM users WHERE email = ?";
+        String sql = "SELECT id, name, email, password_hash, phone_number, role, is_active FROM users WHERE email = ?";
         try (Connection conn = DBUtil.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, email);
@@ -60,7 +62,9 @@ public class UserDAO {
                     user.setName(rs.getString("name"));
                     user.setEmail(rs.getString("email"));
                     user.setPasswordHash(rs.getString("password_hash"));
+                    user.setPhoneNumber(rs.getString("phone_number"));
                     user.setRole(rs.getString("role"));
+                    user.setActive(rs.getBoolean("is_active"));
                     return user;
                 }
             }
@@ -71,7 +75,7 @@ public class UserDAO {
     }
 
     public User findById(int userId) {
-        String sql = "SELECT id, name, email, password_hash, role FROM users WHERE id = ?";
+        String sql = "SELECT id, name, email, password_hash, phone_number, role, is_active FROM users WHERE id = ?";
         try (Connection conn = DBUtil.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, userId);
@@ -82,7 +86,9 @@ public class UserDAO {
                     user.setName(rs.getString("name"));
                     user.setEmail(rs.getString("email"));
                     user.setPasswordHash(rs.getString("password_hash"));
+                    user.setPhoneNumber(rs.getString("phone_number"));
                     user.setRole(rs.getString("role"));
+                    user.setActive(rs.getBoolean("is_active"));
                     return user;
                 }
             }

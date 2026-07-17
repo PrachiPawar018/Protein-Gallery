@@ -55,6 +55,8 @@
     document.getElementById('loginForm').addEventListener('submit', async event => {
         event.preventDefault();
         const form = event.currentTarget;
+        setFormSubmitting(form, true);
+        clearFieldErrors(form);
         const data = new FormData(form);
         const payload = new URLSearchParams();
         data.forEach((value, key) => payload.append(key, value));
@@ -62,9 +64,10 @@
             method: 'POST',
             body: payload,
         });
+        setFormSubmitting(form, false);
         showToast(result.message, result.success ? 'success' : 'error');
-        if (result.success) {
-            setTimeout(() => window.location.href = 'index.html', 700);
+        if (result.success && result.redirectTo) {
+            setTimeout(() => window.location.href = result.redirectTo, 700);
         }
     });
 </script>

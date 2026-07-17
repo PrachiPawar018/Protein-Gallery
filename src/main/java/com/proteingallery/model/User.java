@@ -5,7 +5,9 @@ public class User {
     private String name;
     private String email;
     private String passwordHash;
+    private String phoneNumber;
     private String role;
+    private boolean active;
 
     public int getId() {
         return id;
@@ -45,6 +47,22 @@ public class User {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     public boolean isAdmin() {

@@ -47,6 +47,36 @@ function showToast(message, type = 'info') {
     setTimeout(() => toast.remove(), 3200);
 }
 
+function clearFieldErrors(form) {
+    form.querySelectorAll('.field-error').forEach(el => el.remove());
+    form.querySelectorAll('.text-field, .select-field, .textarea-field').forEach(field => field.classList.remove('field-invalid'));
+}
+
+function showFieldErrors(form, errors = {}) {
+    clearFieldErrors(form);
+    Object.entries(errors).forEach(([fieldName, message]) => {
+        const field = form.querySelector(`[name="${fieldName}"]`);
+        if (!field) return;
+        field.classList.add('field-invalid');
+        const error = document.createElement('div');
+        error.className = 'field-error';
+        error.textContent = message;
+        field.insertAdjacentElement('afterend', error);
+    });
+}
+
+function setFormSubmitting(form, isSubmitting) {
+    const button = form.querySelector('button[type="submit"]');
+    if (!button) return;
+    button.disabled = isSubmitting;
+    if (isSubmitting) {
+        button.dataset.originalText = button.textContent;
+        button.innerHTML = '<span class="spinner"></span> Processing...';
+    } else if (button.dataset.originalText) {
+        button.textContent = button.dataset.originalText;
+    }
+}
+
 function getSession() {
     return fetchJson(`${api.auth}/session`);
 }
@@ -89,7 +119,22 @@ function parseQuery() {
 }
 
 function initPage() {
-    getSession().then(renderNavbar).catch(() => {});
+    const page = window.location.pathname.split('/').pop() || 'index.html';
+    const protectedPages = ['profile.html', 'orders.html', 'cart.html', 'checkout.html', 'admin.html'];
+    getSession().then(session => {
+        renderNavbar(session);
+        if (protectedPages.includes(page) && !session.authenticated) {
+            window.location.href = `login.html?redirect=${encodeURIComponent(page)}`;
+            return;
+        }
+        if (page === 'admin.html' && session.authenticated && session.role !== 'admin') {
+            window.location.href = 'index.html';
+        }
+    }).catch(() => {
+        if (protectedPages.includes(page)) {
+            window.location.href = `login.html?redirect=${encodeURIComponent(page)}`;
+        }
+    });
     attachLogout();
 }
 
