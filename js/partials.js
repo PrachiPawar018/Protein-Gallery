@@ -30,7 +30,9 @@
             <div class="container-fluid fixed-top px-0">
                 <nav class="navbar navbar-expand-lg navbar-light py-2 px-4 px-lg-5">
                     <a href="index.html" class="navbar-brand ms-2 ms-lg-0 d-flex align-items-center gap-3">
-                        <span class="brand-mark"><i class="fas fa-dumbbell"></i></span>
+                        <span class="brand-mark">
+                            <img src="img/Logo.png" alt="Protein Gallery logo" class="brand-logo">
+                        </span>
                         <span>
                             <span class="brand-title d-block">Protein Gallery</span>
                             <small class="brand-subtitle">Premium Fitness Nutrition</small>
