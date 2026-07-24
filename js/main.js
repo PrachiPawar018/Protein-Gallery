@@ -10,8 +10,6 @@
     };
     spinner();
 
-    new WOW().init();
-
     $(window).scroll(function () {
         var scrollTop = $(this).scrollTop();
         $('.scroll-progress').css('width', (scrollTop / ($(document).height() - $(window).height())) * 100 + '%');
@@ -92,58 +90,5 @@
         }, 1000);
     }
 
-    /* Hero Floating Protein Animation Interactivity */
-    var $heroShaker = $('#proteinShakerHero');
-    if ($heroShaker.length) {
-        // Interactive Click - Spawn Extra Powder Particles Burst
-        $heroShaker.on('click', function (e) {
-            var $trail = $('.powder-trail-container');
-            for (var i = 0; i < 6; i++) {
-                var $p = $('<div class="powder-particle"></div>');
-                var offsetX = (Math.random() - 0.5) * 60;
-                var offsetY = (Math.random() - 0.5) * 60;
-                var size = Math.floor(Math.random() * 10) + 8;
-                
-                $p.css({
-                    width: size + 'px',
-                    height: size + 'px',
-                    top: '48%',
-                    left: '35%',
-                    transform: 'translate(' + offsetX + 'px, ' + offsetY + 'px)'
-                });
-                
-                $trail.append($p);
-                (function($elem) {
-                    setTimeout(function () {
-                        $elem.remove();
-                    }, 2800);
-                })($p);
-            }
-
-            // Quick boost shake effect
-            $heroShaker.addClass('animate__animated animate__rubberBand');
-            setTimeout(function () {
-                $heroShaker.removeClass('animate__animated animate__rubberBand');
-            }, 1000);
-        });
-
-        // Mouse Move Parallax Tilt inside Hero Viewport
-        $('#header-carousel').on('mousemove', function (e) {
-            var rect = this.getBoundingClientRect();
-            var x = (e.clientX - rect.left) / rect.width - 0.5;
-            var y = (e.clientY - rect.top) / rect.height - 0.5;
-
-            var tiltX = y * -20;
-            var tiltY = x * 20;
-
-            $('.protein-bobbing-wrapper').css({
-                'transform': 'perspective(600px) rotateX(' + tiltX + 'deg) rotateY(' + tiltY + 'deg)'
-            });
-        }).on('mouseleave', function () {
-            $('.protein-bobbing-wrapper').css({
-                'transform': 'none'
-            });
-        });
-    }
 })(jQuery);
 

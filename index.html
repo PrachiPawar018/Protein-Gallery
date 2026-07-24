@@ -1,15 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <title>Protein Gallery | Premium Fitness Nutrition</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="protein supplements, whey protein, fitness nutrition, gym supplements" name="keywords">
-    <meta content="Protein Gallery offers premium protein supplements, wellness nutrition, and gym essentials for strength and recovery." name="description">
+    <meta
+        content="Protein Gallery offers premium protein supplements, wellness nutrition, and gym essentials for strength and recovery."
+        name="description">
     <link href="img/favicon.ico" rel="icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&family=Poppins:wght@400;500;600&display=swap"
+        rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
     <link href="lib/animate/animate.min.css" rel="stylesheet">
@@ -17,9 +22,11 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
 </head>
+
 <body>
     <div class="scroll-progress"></div>
-    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+    <div id="spinner"
+        class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
         <div class="spinner-border text-primary" role="status"></div>
     </div>
 
@@ -27,149 +34,49 @@
 
     <div class="container-fluid p-0 mb-5 wow fadeIn" data-wow-delay="0.1s">
         <div id="header-carousel" class="carousel slide" data-bs-ride="carousel">
-            <!-- Hero Floating Protein Supplement Animation Overlay -->
-            <div class="hero-animation-container">
-                <div class="protein-flight-path">
-                    <div class="protein-bobbing-wrapper">
-                        <div class="motion-streak-ribbon"></div>
-                        <div class="powder-trail-container">
-                            <div class="powder-particle"></div>
-                            <div class="powder-particle"></div>
-                            <div class="powder-particle"></div>
-                            <div class="powder-particle"></div>
-                            <div class="powder-particle"></div>
-                            <div class="powder-particle"></div>
-                            <div class="powder-particle"></div>
-                            <div class="powder-particle"></div>
-                        </div>
-                        <div class="protein-object-card" id="proteinShakerHero" title="Click for extra protein boost!">
-                            <!-- High quality SVG Protein Shaker Bottle & Powder Trail -->
-                            <svg viewBox="0 0 280 280" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-100 h-100">
-                                <defs>
-                                    <linearGradient id="shakerBodyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                        <stop offset="0%" stop-color="#ff6b35" />
-                                        <stop offset="50%" stop-color="#ff8148" />
-                                        <stop offset="100%" stop-color="#e0531e" />
-                                    </linearGradient>
-                                    <linearGradient id="shakerCapGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                        <stop offset="0%" stop-color="#2563eb" />
-                                        <stop offset="100%" stop-color="#1d4ed8" />
-                                    </linearGradient>
-                                    <linearGradient id="shakerLidGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                                        <stop offset="0%" stop-color="#334155" />
-                                        <stop offset="100%" stop-color="#1e293b" />
-                                    </linearGradient>
-                                    <linearGradient id="powderTrailGrad" x1="100%" y1="50%" x2="0%" y2="50%">
-                                        <stop offset="0%" stop-color="#ff6b35" stop-opacity="0.9" />
-                                        <stop offset="40%" stop-color="#f59e0b" stop-opacity="0.75" />
-                                        <stop offset="80%" stop-color="#2563eb" stop-opacity="0.4" />
-                                        <stop offset="100%" stop-color="#2563eb" stop-opacity="0" />
-                                    </linearGradient>
-                                    <linearGradient id="scoopGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                        <stop offset="0%" stop-color="#fbbf24" />
-                                        <stop offset="100%" stop-color="#d97706" />
-                                    </linearGradient>
-                                    <filter id="glowFilter" x="-20%" y="-20%" width="140%" height="140%">
-                                        <feGaussianBlur stdDeviation="5" result="blur" />
-                                        <feComposite in="SourceGraphic" in2="blur" operator="over" />
-                                    </filter>
-                                </defs>
-
-                                <!-- Curved Powder Jet Trail in SVG -->
-                                <path d="M 25 185 C 65 215, 105 165, 145 155" stroke="url(#powderTrailGrad)" stroke-width="18" stroke-linecap="round" fill="none" opacity="0.85" filter="url(#glowFilter)" />
-                                <path d="M 10 200 C 55 225, 95 180, 135 165" stroke="url(#powderTrailGrad)" stroke-width="8" stroke-linecap="round" fill="none" opacity="0.65" class="svg-trail-line" />
-                                <path d="M 40 170 C 75 195, 115 160, 150 150" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-dasharray="6 6" fill="none" opacity="0.75" class="svg-trail-line" />
-
-                                <!-- Floating Protein Scoop -->
-                                <g transform="translate(42, 85) rotate(-22)">
-                                    <!-- Scoop Handle -->
-                                    <rect x="0" y="18" width="42" height="6" rx="3" fill="#cbd5e1" />
-                                    <!-- Scoop Bowl -->
-                                    <path d="M 38 10 C 38 4, 58 4, 58 10 L 56 26 C 56 30, 40 30, 40 26 Z" fill="url(#scoopGrad)" />
-                                    <!-- Powder Heap inside scoop -->
-                                    <ellipse cx="48" cy="10" rx="10" ry="4" fill="#fef08a" />
-                                    <!-- Falling Powder Dust from scoop -->
-                                    <circle cx="44" cy="34" r="2" fill="#fbbf24" opacity="0.8" />
-                                    <circle cx="50" cy="40" r="1.5" fill="#fef08a" opacity="0.9" />
-                                    <circle cx="42" cy="46" r="2.5" fill="#ff6b35" opacity="0.7" />
-                                </g>
-
-                                <!-- Energy Halo Ring behind bottle -->
-                                <ellipse cx="170" cy="140" rx="75" ry="75" fill="none" stroke="url(#shakerBodyGrad)" stroke-width="2" opacity="0.35" stroke-dasharray="10 6" class="svg-trail-line" />
-                                <ellipse cx="170" cy="140" rx="85" ry="85" fill="none" stroke="#2563eb" stroke-width="1.5" opacity="0.25" stroke-dasharray="4 8" />
-
-                                <!-- Main Protein Shaker Bottle -->
-                                <g transform="translate(110, 50) rotate(15)" filter="url(#glowFilter)">
-                                    <!-- Bottle Shadow -->
-                                    <ellipse cx="60" cy="165" rx="35" ry="8" fill="#0f172a" opacity="0.2" />
-
-                                    <!-- Shaker Base Cup -->
-                                    <path d="M 32 60 L 40 150 C 41 156, 46 160, 52 160 L 68 160 C 74 160, 79 156, 80 150 L 88 60 Z" fill="url(#shakerBodyGrad)" />
-                                    
-                                    <!-- Semi-transparent Body Highlight / Liquid View Window -->
-                                    <path d="M 46 65 L 51 145 C 51 148, 54 150, 57 150 L 63 150 C 66 150, 69 148, 69 145 L 74 65 Z" fill="#ffffff" opacity="0.18" />
-
-                                    <!-- Measurement Lines -->
-                                    <line x1="72" y1="80" x2="78" y2="80" stroke="#ffffff" stroke-width="2" opacity="0.6" />
-                                    <line x1="71" y1="95" x2="79" y2="95" stroke="#ffffff" stroke-width="2" opacity="0.8" />
-                                    <line x1="72" y1="110" x2="78" y2="110" stroke="#ffffff" stroke-width="2" opacity="0.6" />
-                                    <line x1="70" y1="125" x2="80" y2="125" stroke="#ffffff" stroke-width="2" opacity="0.8" />
-
-                                    <!-- Brand Emblem on Bottle -->
-                                    <rect x="42" y="90" width="36" height="24" rx="6" fill="#1e293b" opacity="0.85" />
-                                    <text x="60" y="106" font-family="'Montserrat', sans-serif" font-weight="800" font-size="11" fill="#ffffff" text-anchor="middle">PRO</text>
-
-                                    <!-- Shaker Lid Base -->
-                                    <path d="M 26 42 L 94 42 C 97 42, 99 44, 98 47 L 92 60 L 28 60 L 22 47 C 21 44, 23 42, 26 42 Z" fill="url(#shakerLidGrad)" />
-                                    <!-- Lid Ridge Texture -->
-                                    <rect x="28" y="48" width="64" height="4" rx="2" fill="#475569" />
-
-                                    <!-- Screw Cap / Drink Spout -->
-                                    <rect x="48" y="24" width="24" height="18" rx="4" fill="url(#shakerCapGrad)" />
-                                    <!-- Flip Top Lid Cap -->
-                                    <path d="M 44 24 C 44 18, 76 18, 76 24 Z" fill="#2563eb" />
-                                    
-                                    <!-- Loop Handle on Lid -->
-                                    <path d="M 74 30 C 86 30, 88 44, 78 44" stroke="url(#shakerCapGrad)" stroke-width="4" fill="none" stroke-linecap="round" />
-                                    
-                                    <!-- Glossy Reflection Highlights -->
-                                    <path d="M 36 62 L 40 145" stroke="#ffffff" stroke-width="3" stroke-linecap="round" opacity="0.4" />
-                                </g>
-                            </svg>
-                            <span class="protein-hover-badge"><i class="fas fa-bolt me-1"></i> Fuel Your Motion</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img class="w-100" src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1600&q=90" alt="Hero image">
+                    <img class="w-100"
+                        src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1600&q=90"
+                        alt="Hero image">
                     <div class="carousel-caption">
                         <div class="container">
                             <div class="row justify-content-start">
                                 <div class="col-lg-8">
-                                    <span class="hero-badge"><i class="fas fa-bolt"></i> New Launch • Nitro Whey Pro</span>
-                                    <h1 class="display-2 mb-4 animated slideInDown">Premium nutrition for stronger days.</h1>
-                                    <p class="lead mb-4">Explore lab-tested proteins, recovery essentials, and clean performance nutrition built to support every goal.</p>
-                                    <a href="shop.html" class="btn btn-primary rounded-pill py-sm-3 px-sm-5 me-3">Shop Now</a>
-                                    <a href="single-product.html" class="btn btn-outline-primary rounded-pill py-sm-3 px-sm-5">View Best Seller</a>
+                                    <span class="hero-badge"><i class="fas fa-bolt"></i> New Launch • Nitro Whey
+                                        Pro</span>
+                                    <h1 class="display-2 mb-4 animated slideInDown">Premium nutrition for stronger days.
+                                    </h1>
+                                    <p class="lead mb-4">Explore lab-tested proteins, recovery essentials, and clean
+                                        performance nutrition built to support every goal.</p>
+                                    <a href="shop.html" class="btn btn-primary rounded-pill py-sm-3 px-sm-5 me-3">Shop
+                                        Now</a>
+                                    <a href="single-product.html"
+                                        class="btn btn-outline-primary rounded-pill py-sm-3 px-sm-5">View Best
+                                        Seller</a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <img class="w-100" src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=1600&q=90" alt="Hero image">
+                    <img class="w-100"
+                        src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=1600&q=90"
+                        alt="Hero image">
                     <div class="carousel-caption">
                         <div class="container">
                             <div class="row justify-content-start">
                                 <div class="col-lg-8">
-                                    <span class="hero-badge"><i class="fas fa-fire"></i> Flash Sale • Up to 30% Off</span>
-                                    <h1 class="display-2 mb-4 animated slideInDown">Clean formulas for lean gains and better recovery.</h1>
-                                    <p class="lead mb-4">Build muscle, support your goals, and upgrade your routine with premium nutrition that feels effortless.</p>
-                                    <a href="offers.html" class="btn btn-primary rounded-pill py-sm-3 px-sm-5 me-3">Explore Offers</a>
-                                    <a href="#brands" class="btn btn-outline-primary rounded-pill py-sm-3 px-sm-5">Top Brands</a>
+                                    <span class="hero-badge"><i class="fas fa-fire"></i> Flash Sale • Up to 30%
+                                        Off</span>
+                                    <h1 class="display-2 mb-4 animated slideInDown">Clean formulas for lean gains and
+                                        better recovery.</h1>
+                                    <p class="lead mb-4">Build muscle, support your goals, and upgrade your routine with
+                                        premium nutrition that feels effortless.</p>
+                                    <a href="offers.html"
+                                        class="btn btn-primary rounded-pill py-sm-3 px-sm-5 me-3">Explore Offers</a>
+                                    <a href="#brands" class="btn btn-outline-primary rounded-pill py-sm-3 px-sm-5">Top
+                                        Brands</a>
                                 </div>
                             </div>
                         </div>
@@ -219,9 +126,11 @@
     </div>
 
     <!-- Category Highlights Section -->
-    <div class="container-fluid py-5" id="categories" style="background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);">
+    <div class="container-fluid py-5" id="categories"
+        style="background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);">
         <div class="container">
-            <div class="section-header text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+            <div class="section-header text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s"
+                style="max-width: 600px;">
                 <h1 class="display-5 mb-3">Shop by Category</h1>
                 <p>Explore 100% authentic, lab-tested supplements tailored for your fitness goals.</p>
             </div>
@@ -230,48 +139,60 @@
                     <div class="premium-card p-4 text-center h-100">
                         <i class="fas fa-prescription-bottle-alt fa-3x text-primary mb-3"></i>
                         <h4 class="mb-2">Whey Protein</h4>
-                        <p class="small text-muted mb-3">Isolates, concentrates, and hydro whey for rapid muscle recovery.</p>
-                        <a class="btn btn-outline-primary rounded-pill btn-sm px-4" href="shop.html?category=Whey+Protein">Browse Whey</a>
+                        <p class="small text-muted mb-3">Isolates, concentrates, and hydro whey for rapid muscle
+                            recovery.</p>
+                        <a class="btn btn-outline-primary rounded-pill btn-sm px-4"
+                            href="shop.html?category=Whey+Protein">Browse Whey</a>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.2s">
                     <div class="premium-card p-4 text-center h-100">
                         <i class="fas fa-weight-hanging fa-3x text-primary mb-3"></i>
                         <h4 class="mb-2">Mass Gainer</h4>
-                        <p class="small text-muted mb-3">High-calorie carbohydrate and protein formulas for serious mass gain.</p>
-                        <a class="btn btn-outline-primary rounded-pill btn-sm px-4" href="shop.html?category=Mass+Gainer">Browse Gainers</a>
+                        <p class="small text-muted mb-3">High-calorie carbohydrate and protein formulas for serious mass
+                            gain.</p>
+                        <a class="btn btn-outline-primary rounded-pill btn-sm px-4"
+                            href="shop.html?category=Mass+Gainer">Browse Gainers</a>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
                     <div class="premium-card p-4 text-center h-100">
                         <i class="fas fa-bolt fa-3x text-primary mb-3"></i>
                         <h4 class="mb-2">Creatine</h4>
-                        <p class="small text-muted mb-3">Pure micronized creatine monohydrate for explosive power and strength.</p>
-                        <a class="btn btn-outline-primary rounded-pill btn-sm px-4" href="shop.html?category=Creatine">Browse Creatine</a>
+                        <p class="small text-muted mb-3">Pure micronized creatine monohydrate for explosive power and
+                            strength.</p>
+                        <a class="btn btn-outline-primary rounded-pill btn-sm px-4"
+                            href="shop.html?category=Creatine">Browse Creatine</a>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.4s">
                     <div class="premium-card p-4 text-center h-100">
                         <i class="fas fa-fire fa-3x text-primary mb-3"></i>
                         <h4 class="mb-2">Pre-Workout</h4>
-                        <p class="small text-muted mb-3">Energy boosters, pumps, and focus formulas for intense workouts.</p>
-                        <a class="btn btn-outline-primary rounded-pill btn-sm px-4" href="shop.html?category=Pre-Workout">Browse Pre-Workout</a>
+                        <p class="small text-muted mb-3">Energy boosters, pumps, and focus formulas for intense
+                            workouts.</p>
+                        <a class="btn btn-outline-primary rounded-pill btn-sm px-4"
+                            href="shop.html?category=Pre-Workout">Browse Pre-Workout</a>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
                     <div class="premium-card p-4 text-center h-100">
                         <i class="fas fa-capsules fa-3x text-primary mb-3"></i>
                         <h4 class="mb-2">Vitamins</h4>
-                        <p class="small text-muted mb-3">Multivitamins, Fish Oils, and Minerals for daily health and immunity.</p>
-                        <a class="btn btn-outline-primary rounded-pill btn-sm px-4" href="shop.html?category=Vitamins">Browse Vitamins</a>
+                        <p class="small text-muted mb-3">Multivitamins, Fish Oils, and Minerals for daily health and
+                            immunity.</p>
+                        <a class="btn btn-outline-primary rounded-pill btn-sm px-4"
+                            href="shop.html?category=Vitamins">Browse Vitamins</a>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.6s">
                     <div class="premium-card p-4 text-center h-100">
                         <i class="fas fa-box-open fa-3x text-primary mb-3"></i>
                         <h4 class="mb-2">Beginner Pack</h4>
-                        <p class="small text-muted mb-3">All-in-one starter stacks with Shaker, Whey & Creatine bundle.</p>
-                        <a class="btn btn-outline-primary rounded-pill btn-sm px-4" href="shop.html?category=Beginner+Pack">Browse Stacks</a>
+                        <p class="small text-muted mb-3">All-in-one starter stacks with Shaker, Whey & Creatine bundle.
+                        </p>
+                        <a class="btn btn-outline-primary rounded-pill btn-sm px-4"
+                            href="shop.html?category=Beginner+Pack">Browse Stacks</a>
                     </div>
                 </div>
             </div>
@@ -285,7 +206,8 @@
                 <div class="col-lg-6">
                     <div class="section-header text-start mb-0" style="max-width: 500px;">
                         <h1 class="display-5 mb-2">Featured Supplements</h1>
-                        <p class="text-muted">Built for athletes and fitness enthusiasts who demand 100% authenticity.</p>
+                        <p class="text-muted">Built for athletes and fitness enthusiasts who demand 100% authenticity.
+                        </p>
                     </div>
                 </div>
                 <div class="col-lg-6 text-start text-lg-end">
@@ -301,17 +223,39 @@
         </div>
     </div>
 
-    <div class="container-fluid py-5" id="brands" style="background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);">
+    <div class="container-fluid py-5" id="brands"
+        style="background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);">
         <div class="container">
-            <div class="section-header text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+            <div class="section-header text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s"
+                style="max-width: 600px;">
                 <h1 class="display-5 mb-3">Top Brands</h1>
                 <p>Discover expertly formulated nutrition from the most trusted names in fitness.</p>
             </div>
             <div class="row g-4">
-                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s"><div class="premium-card p-4 text-center"><h4>MyProtein</h4><p>High-performance formulas that balance taste and results.</p></div></div>
-                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.2s"><div class="premium-card p-4 text-center"><h4>MuscleBlaze</h4><p>Reliable recovery and performance nutrition for daily progress.</p></div></div>
-                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.3s"><div class="premium-card p-4 text-center"><h4>Optimum Nutrition</h4><p>Classic whey and modern training support with proven quality.</p></div></div>
-                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.4s"><div class="premium-card p-4 text-center"><h4>Nutrabay</h4><p>Premium supplements with an emphasis on clean ingredients.</p></div></div>
+                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="premium-card p-4 text-center">
+                        <h4>MyProtein</h4>
+                        <p>High-performance formulas that balance taste and results.</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.2s">
+                    <div class="premium-card p-4 text-center">
+                        <h4>MuscleBlaze</h4>
+                        <p>Reliable recovery and performance nutrition for daily progress.</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+                    <div class="premium-card p-4 text-center">
+                        <h4>Optimum Nutrition</h4>
+                        <p>Classic whey and modern training support with proven quality.</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.4s">
+                    <div class="premium-card p-4 text-center">
+                        <h4>Nutrabay</h4>
+                        <p>Premium supplements with an emphasis on clean ingredients.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -321,12 +265,15 @@
             <div class="row g-5 align-items-center">
                 <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
                     <div class="about-img position-relative overflow-hidden p-5 pe-0">
-                        <img class="img-fluid w-100" src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1200&q=90" alt="protein gallery lifestyle">
+                        <img class="img-fluid w-100"
+                            src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1200&q=90"
+                            alt="protein gallery lifestyle">
                     </div>
                 </div>
                 <div class="col-lg-6 wow fadeIn" data-wow-delay="0.3s">
                     <h1 class="display-5 mb-4">Why choose Protein Gallery?</h1>
-                    <p class="mb-4">From your first shake to your final set, Protein Gallery helps you stay consistent with premium products and a smooth shopping experience.</p>
+                    <p class="mb-4">From your first shake to your final set, Protein Gallery helps you stay consistent
+                        with premium products and a smooth shopping experience.</p>
                     <p><i class="fa fa-check text-primary me-3"></i>Science-backed ingredient lists</p>
                     <p><i class="fa fa-check text-primary me-3"></i>Fast, trustworthy delivery</p>
                     <p><i class="fa fa-check text-primary me-3"></i>Dedicated support for your goals</p>
@@ -338,7 +285,8 @@
 
     <div class="container-fluid bg-light py-6">
         <div class="container">
-            <div class="section-header text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+            <div class="section-header text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s"
+                style="max-width: 600px;">
                 <h1 class="display-5 mb-3">What customers say</h1>
                 <p>Loved by athletes who care about taste, recovery, and real results.</p>
             </div>
@@ -347,7 +295,9 @@
                     <i class="fa fa-quote-left fa-3x text-primary position-absolute top-0 start-0 mt-n4 ms-5"></i>
                     <p class="mb-4">The taste is amazing and my recovery has improved significantly since switching.</p>
                     <div class="d-flex align-items-center">
-                        <img class="flex-shrink-0 rounded-circle" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=90" alt="">
+                        <img class="flex-shrink-0 rounded-circle"
+                            src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=90"
+                            alt="">
                         <div class="ms-3">
                             <h5 class="mb-1">Aarav S.</h5>
                             <span>Fitness Coach</span>
@@ -358,7 +308,9 @@
                     <i class="fa fa-quote-left fa-3x text-primary position-absolute top-0 start-0 mt-n4 ms-5"></i>
                     <p class="mb-4">Clean nutrition and quick delivery made this my go-to store for supplements.</p>
                     <div class="d-flex align-items-center">
-                        <img class="flex-shrink-0 rounded-circle" src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=200&q=90" alt="">
+                        <img class="flex-shrink-0 rounded-circle"
+                            src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=200&q=90"
+                            alt="">
                         <div class="ms-3">
                             <h5 class="mb-1">Neha P.</h5>
                             <span>Runner</span>
@@ -367,9 +319,12 @@
                 </div>
                 <div class="testimonial-item position-relative bg-white p-5 mt-4">
                     <i class="fa fa-quote-left fa-3x text-primary position-absolute top-0 start-0 mt-n4 ms-5"></i>
-                    <p class="mb-4">The product variety and premium feel are unmatched. I always find what I need here.</p>
+                    <p class="mb-4">The product variety and premium feel are unmatched. I always find what I need here.
+                    </p>
                     <div class="d-flex align-items-center">
-                        <img class="flex-shrink-0 rounded-circle" src="https://images.unsplash.com/photo-1500366f299330-6b0ee048771e?auto=format&fit=crop&w=200&q=90" alt="">
+                        <img class="flex-shrink-0 rounded-circle"
+                            src="https://images.unsplash.com/photo-1500366f299330-6b0ee048771e?auto=format&fit=crop&w=200&q=90"
+                            alt="">
                         <div class="ms-3">
                             <h5 class="mb-1">Rohan K.</h5>
                             <span>Bodybuilder</span>
@@ -382,22 +337,37 @@
 
     <div class="container-xxl py-5">
         <div class="container">
-            <div class="section-header text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 600px;">
+            <div class="section-header text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s"
+                style="max-width: 600px;">
                 <h1 class="display-5 mb-3">Frequently Asked Questions</h1>
                 <p>Everything you need to know before shopping with Protein Gallery.</p>
             </div>
             <div class="accordion" id="faqAccordion">
                 <div class="accordion-item premium-card mb-3">
-                    <h2 class="accordion-header"><button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">Do you offer vegetarian and vegan supplements?</button></h2>
-                    <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion"><div class="accordion-body">Yes. We stock plant-based blends, vegan-friendly products, and performance nutrition for varied lifestyles.</div></div>
+                    <h2 class="accordion-header"><button class="accordion-button" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#faq1">Do you offer vegetarian and vegan
+                            supplements?</button></h2>
+                    <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">Yes. We stock plant-based blends, vegan-friendly products, and
+                            performance nutrition for varied lifestyles.</div>
+                    </div>
                 </div>
                 <div class="accordion-item premium-card mb-3">
-                    <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">How quickly do you ship?</button></h2>
-                    <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion"><div class="accordion-body">Most orders dispatch within 24 hours and reach customers across India in a few business days.</div></div>
+                    <h2 class="accordion-header"><button class="accordion-button collapsed" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#faq2">How quickly do you ship?</button></h2>
+                    <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">Most orders dispatch within 24 hours and reach customers across
+                            India in a few business days.</div>
+                    </div>
                 </div>
                 <div class="accordion-item premium-card">
-                    <h2 class="accordion-header"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">Can I return a product if it is unopened?</button></h2>
-                    <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion"><div class="accordion-body">Yes, unopened products can be returned within the policy window, and our support team can guide you through the process.</div></div>
+                    <h2 class="accordion-header"><button class="accordion-button collapsed" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#faq3">Can I return a product if it is
+                            unopened?</button></h2>
+                    <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">Yes, unopened products can be returned within the policy window, and
+                            our support team can guide you through the process.</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -407,7 +377,8 @@
         <div class="container">
             <div class="premium-card p-5 text-center wow fadeInUp" data-wow-delay="0.1s">
                 <h2 class="mb-3">Get early access to launches and offers</h2>
-                <p class="mb-4">Join our newsletter for exclusive discounts, new arrivals, and expert nutrition tips.</p>
+                <p class="mb-4">Join our newsletter for exclusive discounts, new arrivals, and expert nutrition tips.
+                </p>
                 <div class="row justify-content-center">
                     <div class="col-lg-6">
                         <div class="input-group">
@@ -454,14 +425,17 @@
         <div class="container-fluid copyright">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">&copy; <a href="#">Protein Gallery</a>, All Rights Reserved.</div>
-                    <div class="col-md-6 text-center text-md-end">Premium fitness supplements for modern performance goals.</div>
+                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">&copy; <a href="#">Protein Gallery</a>,
+                        All Rights Reserved.</div>
+                    <div class="col-md-6 text-center text-md-end">Premium fitness supplements for modern performance
+                        goals.</div>
                 </div>
             </div>
         </div>
     </div>
 
-    <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i class="bi bi-arrow-up"></i></a>
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i
+            class="bi bi-arrow-up"></i></a>
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -545,4 +519,5 @@
         });
     </script>
 </body>
+
 </html>
