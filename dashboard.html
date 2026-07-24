@@ -2,25 +2,215 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Protein Gallery | Dashboard</title>
+    <title>Protein Gallery | Admin Dashboard</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <link href="img/favicon.ico" rel="icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
 </head>
-<body>
-    <div class="container py-5">
-        <div class="row g-4 mb-4">
-            <div class="col-md-3"><div class="stat-card"><h6 class="text-muted">Orders</h6><div class="counter" data-count="128">0</div></div></div>
-            <div class="col-md-3"><div class="stat-card"><h6 class="text-muted">Wishlist</h6><div class="counter" data-count="24">0</div></div></div>
-            <div class="col-md-3"><div class="stat-card"><h6 class="text-muted">Saved Addresses</h6><div class="counter" data-count="3">0</div></div></div>
-            <div class="col-md-3"><div class="stat-card"><h6 class="text-muted">Loyalty Points</h6><div class="counter" data-count="4800">0</div></div></div>
-        </div>
-        <div class="section-shell p-4">
-            <h4 class="mb-3">Recent activity</h4>
-            <div class="timeline-item">Order #PG-1024 shipped successfully.</div>
-            <div class="timeline-item">New wishlist item added to your recovery stack.</div>
-            <div class="timeline-item">Invoice downloaded for your latest purchase.</div>
+<body class="bg-light">
+    <!-- Admin Top Navbar -->
+    <div class="container-fluid bg-dark text-white py-3 px-4 shadow-sm">
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center gap-3">
+                <span class="brand-mark bg-primary text-white"><i class="fas fa-user-shield"></i></span>
+                <div>
+                    <h5 class="fw-bold mb-0 text-white">Protein Gallery Admin</h5>
+                    <small class="text-white-50">E-Commerce Management System</small>
+                </div>
+            </div>
+            <div class="d-flex align-items-center gap-3">
+                <a href="index.html" class="btn btn-outline-light btn-sm rounded-pill"><i class="fas fa-home me-1"></i>View Storefront</a>
+                <button onclick="App.logout()" class="btn btn-danger btn-sm rounded-pill"><i class="fas fa-sign-out-alt me-1"></i>Logout</button>
+            </div>
         </div>
     </div>
+
+    <!-- Admin Body -->
+    <div class="container-fluid py-4 px-4">
+        <!-- Stat Cards Row -->
+        <div class="row g-4 mb-4">
+            <div class="col-md-3">
+                <div class="card border-0 shadow-sm rounded-4 p-4 bg-white text-center">
+                    <div class="text-primary mb-2 fs-1"><i class="fas fa-rupee-sign"></i></div>
+                    <h6 class="text-muted fw-semibold">Total Revenue</h6>
+                    <h2 id="statRevenue" class="fw-bold text-dark mb-0">₹0</h2>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card border-0 shadow-sm rounded-4 p-4 bg-white text-center">
+                    <div class="text-success mb-2 fs-1"><i class="fas fa-shopping-bag"></i></div>
+                    <h6 class="text-muted fw-semibold">Total Orders</h6>
+                    <h2 id="statOrders" class="fw-bold text-dark mb-0">0</h2>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card border-0 shadow-sm rounded-4 p-4 bg-white text-center">
+                    <div class="text-info mb-2 fs-1"><i class="fas fa-users"></i></div>
+                    <h6 class="text-muted fw-semibold">Registered Users</h6>
+                    <h2 id="statUsers" class="fw-bold text-dark mb-0">0</h2>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card border-0 shadow-sm rounded-4 p-4 bg-white text-center">
+                    <div class="text-warning mb-2 fs-1"><i class="fas fa-boxes"></i></div>
+                    <h6 class="text-muted fw-semibold">Active Products</h6>
+                    <h2 id="statProducts" class="fw-bold text-dark mb-0">0</h2>
+                </div>
+            </div>
+        </div>
+
+        <!-- Orders Table Card -->
+        <div class="card border-0 shadow-sm rounded-4 p-4 bg-white">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h4 class="fw-bold mb-0"><i class="fas fa-clipboard-list text-primary me-2"></i>Recent Orders Management</h4>
+                <button onclick="loadAdminData()" class="btn btn-outline-primary btn-sm rounded-3"><i class="fas fa-sync-alt me-1"></i>Refresh</button>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Customer</th>
+                            <th>Amount</th>
+                            <th>Payment Method</th>
+                            <th>Status</th>
+                            <th>Tracking #</th>
+                            <th>Date</th>
+                            <th class="text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adminOrdersTable">
+                        <tr>
+                            <td colspan="8" class="text-center py-4 text-muted">
+                                <div class="spinner-border spinner-border-sm text-primary me-2"></div>
+                                Loading admin data...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div id="shared-footer"></div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/partials.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        async function checkAdminAuth() {
+            try {
+                const res = await fetch('/api/auth/me');
+                const data = await res.json();
+
+                if (!data.loggedIn || !data.user || data.user.role !== 'ADMIN') {
+                    App.toast('Access denied. Administrator privileges required.', 'error');
+                    setTimeout(() => window.location.href = 'login.html', 1200);
+                    return false;
+                }
+                return true;
+            } catch (err) {
+                window.location.href = 'login.html';
+                return false;
+            }
+        }
+
+        async function loadAdminData() {
+            const isAuthorized = await checkAdminAuth();
+            if (!isAuthorized) return;
+
+            try {
+                // Fetch Stats
+                const statsRes = await fetch('/api/admin/stats');
+                const statsData = await statsRes.json();
+
+                if (statsData.success) {
+                    document.getElementById('statRevenue').textContent = `₹${statsData.stats.totalSales.toLocaleString()}`;
+                    document.getElementById('statOrders').textContent = statsData.stats.totalOrders;
+                    document.getElementById('statUsers').textContent = statsData.stats.totalUsers;
+                    document.getElementById('statProducts').textContent = statsData.stats.totalProducts;
+                }
+
+                // Fetch Orders
+                const ordersRes = await fetch('/api/admin/orders');
+                const ordersData = await ordersRes.json();
+                const tbody = document.getElementById('adminOrdersTable');
+
+                if (!ordersData.success || !ordersData.orders || ordersData.orders.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="8" class="text-center py-4 text-muted">No orders found in database.</td></tr>`;
+                    return;
+                }
+
+                let html = '';
+                ordersData.orders.forEach(o => {
+                    const dateStr = new Date(o.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+                    
+                    let badgeClass = 'bg-primary';
+                    if (o.status === 'PAID') badgeClass = 'bg-success';
+                    if (o.status === 'SHIPPED') badgeClass = 'bg-info text-dark';
+                    if (o.status === 'DELIVERED') badgeClass = 'bg-dark';
+
+                    html += `
+                        <tr>
+                            <td class="fw-bold">#${o.id}</td>
+                            <td>
+                                <div class="fw-semibold text-dark">${o.customer_name}</div>
+                                <small class="text-muted">${o.customer_email}</small>
+                            </td>
+                            <td class="fw-bold text-primary">₹${parseFloat(o.total_amount).toLocaleString()}</td>
+                            <td class="small text-uppercase">${o.payment_method || 'RAZORPAY'}</td>
+                            <td><span class="badge ${badgeClass} px-3 py-2 rounded-pill">${o.status}</span></td>
+                            <td class="font-monospace small">${o.tracking_number || 'N/A'}</td>
+                            <td class="small text-muted">${dateStr}</td>
+                            <td class="text-center">
+                                <select class="form-select form-select-sm d-inline-block w-auto" onchange="updateOrderStatus(${o.id}, this.value)">
+                                    <option value="" disabled selected>Update Status</option>
+                                    <option value="PAID">Set PAID</option>
+                                    <option value="SHIPPED">Set SHIPPED</option>
+                                    <option value="DELIVERED">Set DELIVERED</option>
+                                    <option value="CANCELLED">Set CANCELLED</option>
+                                </select>
+                            </td>
+                        </tr>
+                    `;
+                });
+
+                tbody.innerHTML = html;
+            } catch (err) {
+                App.toast('Failed to load admin dashboard data.', 'error');
+            }
+        }
+
+        async function updateOrderStatus(orderId, newStatus) {
+            if (!newStatus) return;
+            try {
+                const res = await fetch(`/api/admin/orders/${orderId}/status`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ status: newStatus })
+                });
+
+                const data = await res.json();
+                if (data.success) {
+                    App.toast(data.message, 'success');
+                    loadAdminData();
+                } else {
+                    App.toast(data.message, 'error');
+                }
+            } catch (err) {
+                App.toast('Failed to update status.', 'error');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', loadAdminData);
+    </script>
 </body>
 </html>

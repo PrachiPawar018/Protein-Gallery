@@ -4,42 +4,400 @@
     <meta charset="utf-8">
     <title>Protein Gallery | Checkout</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <link href="img/favicon.ico" rel="icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
 </head>
-<body>
-    <div class="container py-5">
+<body class="bg-light">
+    <div id="shared-navbar"></div>
+
+    <!-- Checkout Header Banner -->
+    <div class="bg-dark text-white py-5 mb-4" style="margin-top: 75px;">
+        <div class="container text-center py-3">
+            <h1 class="display-6 fw-bold mb-2 text-white">Express Checkout</h1>
+            <p class="lead text-primary mb-0">Secure payment powered by Razorpay.</p>
+        </div>
+    </div>
+
+    <!-- Main Checkout Container -->
+    <div class="container pb-5">
         <div class="row g-4">
+            <!-- Left Side: Shipping Address & Coupon -->
             <div class="col-lg-7">
-                <div class="checkout-card p-4 mb-4">
-                    <h4 class="mb-3">Shipping Address</h4>
-                    <form>
+                <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5 mb-4">
+                    <h4 class="fw-bold mb-4"><i class="fas fa-truck text-primary me-2"></i>Shipping Address</h4>
+                    <form id="checkoutAddressForm">
                         <div class="row g-3">
-                            <div class="col-md-6"><input class="form-control" placeholder="Full name"></div>
-                            <div class="col-md-6"><input class="form-control" placeholder="Phone number"></div>
-                            <div class="col-12"><input class="form-control" placeholder="Address"></div>
-                            <div class="col-md-6"><input class="form-control" placeholder="City"></div>
-                            <div class="col-md-6"><input class="form-control" placeholder="Pincode"></div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Full Name</label>
+                                <input type="text" id="shipName" class="form-control py-2" placeholder="John Doe" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Phone Number</label>
+                                <input type="tel" id="shipPhone" class="form-control py-2" placeholder="9876543210" required>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label fw-semibold">Street Address / House No.</label>
+                                <input type="text" id="shipStreet" class="form-control py-2" placeholder="123 Fitness Ave, Suite 4B" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">City</label>
+                                <input type="text" id="shipCity" class="form-control py-2" placeholder="Mumbai" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Pincode / Postal Code</label>
+                                <input type="text" id="shipPincode" class="form-control py-2" placeholder="400001" required>
+                            </div>
                         </div>
                     </form>
                 </div>
-                <div class="checkout-card p-4">
-                    <h4 class="mb-3">Payment</h4>
-                    <p class="text-muted">Secure Razorpay-style checkout for premium supplement orders.</p>
-                    <button class="btn btn-primary py-3 px-4">Pay Now</button>
+
+                <!-- Coupon Section -->
+                <div class="card border-0 shadow-sm rounded-4 p-4 mb-4">
+                    <h5 class="fw-bold mb-3"><i class="fas fa-ticket-alt text-primary me-2"></i>Have a Promo Coupon?</h5>
+                    <div class="input-group">
+                        <input type="text" id="couponCodeInput" class="form-control py-2 text-uppercase fw-bold" placeholder="e.g. WELCOME10">
+                        <button class="btn btn-outline-primary px-4 fw-bold" type="button" id="applyCouponBtn">Apply Coupon</button>
+                    </div>
+                    <div id="couponStatusMessage" class="small mt-2"></div>
+                </div>
+
+                <!-- Payment Info Box -->
+                <div class="card border-0 shadow-sm rounded-4 p-4 bg-light">
+                    <div class="d-flex align-items-center gap-3">
+                        <i class="fas fa-shield-alt fa-3x text-primary"></i>
+                        <div>
+                            <h6 class="fw-bold mb-1">100% Encrypted & Secure Payment</h6>
+                            <p class="text-muted small mb-0">Supports UPI, NetBanking, Credit/Debit Cards, and Wallets via Razorpay.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
+
+            <!-- Right Side: Order Summary & Pay Button -->
             <div class="col-lg-5">
-                <div class="checkout-card p-4">
-                    <h4 class="mb-3">Order Summary</h4>
-                    <div class="d-flex justify-content-between mb-2"><span>Nitro Whey Pro</span><span>₹4,999</span></div>
-                    <div class="d-flex justify-content-between mb-2"><span>Recovery Fuel</span><span>₹5,798</span></div>
-                    <div class="d-flex justify-content-between mb-2"><span>Shipping</span><span>₹199</span></div>
-                    <hr>
-                    <div class="d-flex justify-content-between fw-bold"><span>Total</span><span>₹10,996</span></div>
+                <div class="card border-0 shadow-sm rounded-4 p-4 sticky-top" style="top: 100px;">
+                    <h4 class="fw-bold mb-4">Order Items Summary</h4>
+                    <div id="checkoutItemsList" class="mb-4 overflow-auto" style="max-height: 250px;">
+                        <div class="text-center py-3">
+                            <div class="spinner-border spinner-border-sm text-primary"></div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-between mb-2 text-muted">
+                        <span>Subtotal</span>
+                        <span id="chkSubtotal" class="fw-bold text-dark">₹0</span>
+                    </div>
+                    <div id="discountRow" class="d-flex justify-content-between mb-2 text-success d-none">
+                        <span>Coupon Discount</span>
+                        <span id="chkDiscount" class="fw-bold">-₹0</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2 text-muted">
+                        <span>Shipping Fee</span>
+                        <span id="chkShipping" class="fw-bold text-dark">₹199</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-3 text-muted">
+                        <span>GST Tax (18%)</span>
+                        <span id="chkGst" class="fw-bold text-dark">₹0</span>
+                    </div>
+
+                    <hr class="my-3">
+
+                    <div class="d-flex justify-content-between mb-4">
+                        <span class="fs-5 fw-bold">Payable Total</span>
+                        <span id="chkTotal" class="fs-4 fw-bold text-primary">₹0</span>
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button id="placeCodBtn" class="btn btn-success w-100 py-3 fw-bold rounded-3 shadow-sm fs-5">
+                            <i class="fas fa-check-circle me-2"></i>Place Order (Cash on Delivery)
+                        </button>
+                        <button id="payNowBtn" class="btn btn-outline-primary w-100 py-2 fw-semibold rounded-3 small">
+                            <i class="fas fa-lock me-1"></i>Pay via Razorpay
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <div id="shared-footer"></div>
+
+    <!-- Razorpay & Bootstrap Scripts -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/partials.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        let appliedCoupon = null;
+        let cartItems = [];
+        let rawSubtotal = 0;
+        let discountAmount = 0;
+
+        async function loadCheckoutData() {
+            try {
+                // Check if user is logged in
+                const userRes = await fetch('/api/auth/me');
+                const userData = await userRes.json();
+
+                if (!userData.loggedIn || !userData.user) {
+                    App.toast('Please login to continue checkout.', 'error');
+                    setTimeout(() => window.location.href = 'login.html', 1000);
+                    return;
+                }
+
+                // Autofill name and phone if available
+                document.getElementById('shipName').value = userData.user.name || '';
+                document.getElementById('shipPhone').value = userData.user.phone_number || '';
+
+                // Fetch cart
+                const cartRes = await fetch('/api/cart');
+                const cartData = await cartRes.json();
+
+                if (!cartData.success || !cartData.items || cartData.items.length === 0) {
+                    App.toast('Your cart is empty!', 'error');
+                    setTimeout(() => window.location.href = 'shop.html', 1200);
+                    return;
+                }
+
+                cartItems = cartData.items;
+                renderItemsSummary();
+            } catch (err) {
+                App.toast('Failed to load checkout details.', 'error');
+            }
+        }
+
+        function renderItemsSummary() {
+            const container = document.getElementById('checkoutItemsList');
+            rawSubtotal = 0;
+            let html = '';
+
+            cartItems.forEach(item => {
+                const itemTotal = parseFloat(item.price) * item.quantity;
+                rawSubtotal += itemTotal;
+
+                html += `
+                    <div class="d-flex justify-content-between align-items-center py-2 border-bottom">
+                        <div class="d-flex align-items-center gap-2">
+                            <img src="${App.getImageUrl(item.image_url)}" class="rounded" style="width: 42px; height: 42px; object-fit: cover;" alt="">
+                            <div>
+                                <div class="fw-bold small text-truncate" style="max-width: 170px;">${item.name}</div>
+                                <small class="text-muted">${item.quantity} × ₹${parseFloat(item.price).toLocaleString('en-IN')}</small>
+                            </div>
+                        </div>
+                        <span class="fw-semibold small">₹${itemTotal.toLocaleString('en-IN')}</span>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+            recalculateTotals();
+        }
+
+        function recalculateTotals() {
+            const shipping = rawSubtotal > 0 ? 199 : 0;
+            const gst = Math.round(rawSubtotal * 0.18);
+            const total = Math.max(0, rawSubtotal - discountAmount) + shipping + gst;
+
+            document.getElementById('chkSubtotal').textContent = `₹${rawSubtotal.toLocaleString('en-IN')}`;
+            document.getElementById('chkShipping').textContent = `₹${shipping}`;
+            document.getElementById('chkGst').textContent = `₹${gst.toLocaleString('en-IN')}`;
+            document.getElementById('chkTotal').textContent = `₹${total.toLocaleString('en-IN')}`;
+
+            if (discountAmount > 0) {
+                document.getElementById('discountRow').classList.remove('d-none');
+                document.getElementById('chkDiscount').textContent = `-₹${discountAmount.toLocaleString('en-IN')}`;
+            } else {
+                document.getElementById('discountRow').classList.add('d-none');
+            }
+        }
+
+        // Direct COD Order Placement
+        document.getElementById('placeCodBtn').addEventListener('click', async () => {
+            const name = document.getElementById('shipName').value.trim();
+            const phone = document.getElementById('shipPhone').value.trim();
+            const street = document.getElementById('shipStreet').value.trim();
+            const city = document.getElementById('shipCity').value.trim();
+            const pincode = document.getElementById('shipPincode').value.trim();
+
+            if (!name || !phone || !street || !city || !pincode) {
+                App.toast('Please fill in all shipping address fields.', 'error');
+                return;
+            }
+
+            const shippingAddress = `${name}, ${street}, ${city} - ${pincode} (Ph: ${phone})`;
+            const codBtn = document.getElementById('placeCodBtn');
+
+            try {
+                codBtn.disabled = true;
+                const res = await fetch('/api/checkout/place-order', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        shipping_address: shippingAddress,
+                        coupon_code: appliedCoupon
+                    })
+                });
+                const data = await res.json();
+
+                if (data.success) {
+                    App.toast(data.message, 'success');
+                    setTimeout(() => {
+                        window.location.href = 'profile.html?tab=orders';
+                    }, 1200);
+                } else {
+                    App.toast(data.message, 'error');
+                    codBtn.disabled = false;
+                }
+            } catch (err) {
+                App.toast('Failed to place direct order.', 'error');
+                codBtn.disabled = false;
+            }
+        });
+
+        // Apply Coupon Code
+        document.getElementById('applyCouponBtn').addEventListener('click', async () => {
+            const code = document.getElementById('couponCodeInput').value.trim();
+            const msgEl = document.getElementById('couponStatusMessage');
+
+            if (!code) {
+                App.toast('Please enter a coupon code.', 'error');
+                return;
+            }
+
+            try {
+                const res = await fetch('/api/coupons/apply', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ code, orderAmount: rawSubtotal })
+                });
+                const data = await res.json();
+
+                if (data.success) {
+                    appliedCoupon = data.coupon_code;
+                    discountAmount = data.discount_amount;
+                    recalculateTotals();
+                    msgEl.className = 'small mt-2 text-success fw-bold';
+                    msgEl.textContent = data.message;
+                    App.toast(data.message, 'success');
+                } else {
+                    appliedCoupon = null;
+                    discountAmount = 0;
+                    recalculateTotals();
+                    msgEl.className = 'small mt-2 text-danger fw-bold';
+                    msgEl.textContent = data.message;
+                    App.toast(data.message, 'error');
+                }
+            } catch (err) {
+                App.toast('Failed to verify coupon code.', 'error');
+            }
+        });
+
+        // Pay Now via Razorpay
+        document.getElementById('payNowBtn').addEventListener('click', async () => {
+            const name = document.getElementById('shipName').value.trim();
+            const phone = document.getElementById('shipPhone').value.trim();
+            const street = document.getElementById('shipStreet').value.trim();
+            const city = document.getElementById('shipCity').value.trim();
+            const pincode = document.getElementById('shipPincode').value.trim();
+
+            if (!name || !phone || !street || !city || !pincode) {
+                App.toast('Please fill in all shipping address fields.', 'error');
+                return;
+            }
+
+            const shippingAddress = `${name}, ${street}, ${city} - ${pincode} (Ph: ${phone})`;
+            const payBtn = document.getElementById('payNowBtn');
+
+            try {
+                payBtn.disabled = true;
+
+                // 1. Create Razorpay order on backend
+                const orderRes = await fetch('/api/checkout/create-razorpay-order', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        coupon_code: appliedCoupon,
+                        shipping_address: shippingAddress
+                    })
+                });
+
+                const orderData = await orderRes.json();
+                if (!orderData.success) {
+                    App.toast(orderData.message, 'error');
+                    payBtn.disabled = false;
+                    return;
+                }
+
+                // 2. Open Razorpay Checkout Modal
+                const options = {
+                    key: orderData.key,
+                    amount: orderData.amount * 100,
+                    currency: orderData.currency,
+                    name: 'Protein Gallery',
+                    description: 'Supplement Order Payment',
+                    image: 'img/favicon.ico',
+                    order_id: orderData.razorpay_order_id,
+                    handler: async function (response) {
+                        try {
+                            // 3. Verify Payment & Create Orders/Payments Records
+                            const verifyRes = await fetch('/api/checkout/verify-payment', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({
+                                    razorpay_order_id: response.razorpay_order_id,
+                                    razorpay_payment_id: response.razorpay_payment_id,
+                                    razorpay_signature: response.razorpay_signature,
+                                    shipping_address: shippingAddress,
+                                    coupon_code: appliedCoupon,
+                                    payment_method: 'RAZORPAY'
+                                })
+                            });
+
+                            const verifyData = await verifyRes.json();
+                            if (verifyData.success) {
+                                App.toast(verifyData.message, 'success');
+                                setTimeout(() => {
+                                    window.location.href = 'orders.html';
+                                }, 1200);
+                            } else {
+                                App.toast(verifyData.message, 'error');
+                                payBtn.disabled = false;
+                            }
+                        } catch (verifyErr) {
+                            App.toast('Payment verification failed.', 'error');
+                            payBtn.disabled = false;
+                        }
+                    },
+                    prefill: {
+                        name: name,
+                        contact: phone
+                    },
+                    theme: {
+                        color: '#ff6b35'
+                    }
+                };
+
+                const rzp = new Razorpay(options);
+                rzp.on('payment.failed', function (resp) {
+                    App.toast('Payment cancelled or failed. Please try again.', 'error');
+                    payBtn.disabled = false;
+                });
+                rzp.open();
+
+            } catch (err) {
+                App.toast('Checkout error occurred.', 'error');
+                payBtn.disabled = false;
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', loadCheckoutData);
+    </script>
 </body>
 </html>

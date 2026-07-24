@@ -13,225 +13,194 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
     <link href="lib/animate/animate.min.css" rel="stylesheet">
-    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
 </head>
-<body>
-    <div class="scroll-progress"></div>
-    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
-        <div class="spinner-border text-primary" role="status"></div>
+<body class="bg-light">
+    <div id="shared-navbar"></div>
+
+    <!-- Shop Page Banner -->
+    <div class="bg-dark text-white py-5 mb-4" style="margin-top: 75px;">
+        <div class="container text-center py-3">
+            <h1 class="display-6 fw-bold mb-2 text-white">Shop Premium Supplements</h1>
+            <p class="lead text-primary mb-0">100% Authentic, Lab-Tested Whey, Plant Protein & Gainers.</p>
+        </div>
     </div>
 
-    <div class="container-fluid fixed-top px-0 wow fadeIn" data-wow-delay="0.1s">
-        <nav class="navbar navbar-expand-lg navbar-light py-2 px-4 px-lg-5 wow fadeIn" data-wow-delay="0.1s">
-            <a href="index.html" class="navbar-brand ms-2 ms-lg-0 d-flex align-items-center gap-3">
-                <span class="brand-mark"><i class="fas fa-dumbbell"></i></span>
-                <span>
-                    <span class="brand-title d-block">Protein Gallery</span>
-                    <small class="brand-subtitle">Premium Fitness Nutrition</small>
-                </span>
-            </a>
-            <button type="button" class="navbar-toggler me-2" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-                <div class="navbar-nav mx-auto align-items-center gap-1 p-3 p-lg-0">
-                    <a href="index.html" class="nav-item nav-link">Home</a>
-                    <a href="shop.html" class="nav-item nav-link active">Shop</a>
-                    <a href="categories.html" class="nav-item nav-link">Categories</a>
-                    <a href="brands.html" class="nav-item nav-link">Brands</a>
-                    <a href="offers.html" class="nav-item nav-link">Offers</a>
-                    <a href="about.html" class="nav-item nav-link">About</a>
-                    <a href="contact.html" class="nav-item nav-link">Contact</a>
-                </div>
-                <div class="navbar-actions d-flex align-items-center gap-2 ms-lg-3">
-                    <a class="nav-icon-btn" href="shop.html" title="Search"><i class="fa fa-search"></i></a>
-                    <a class="nav-icon-btn" href="login.html" title="Account"><i class="fa fa-user"></i></a>
-                    <a class="nav-icon-btn" href="cart.html" title="Cart"><i class="fa fa-shopping-bag"></i><span class="cart-badge">2</span></a>
-                    <a class="btn btn-primary rounded-pill px-4 py-2 ms-2 d-none d-lg-inline-flex" href="shop.html">Shop Now</a>
-                </div>
-            </div>
-        </nav>
-    </div>
-
-    <div class="container-fluid page-header mb-5 wow fadeIn" data-wow-delay="0.1s">
+    <div class="container-xxl py-4">
         <div class="container">
-            <h1 class="display-3 mb-3 animated slideInDown">Shop Premium Nutrition</h1>
-            <nav aria-label="breadcrumb animated slideInDown">
-                <ol class="breadcrumb mb-0">
-                    <li class="breadcrumb-item"><a class="text-body" href="index.html">Home</a></li>
-                    <li class="breadcrumb-item text-dark active" aria-current="page">Shop</li>
-                </ol>
-            </nav>
-        </div>
-    </div>
-
-    <div class="container-xxl py-5">
-        <div class="container">
-            <div class="row g-4 mb-5">
-                <div class="col-lg-3 col-md-6">
-                    <div class="premium-card p-4">
-                        <h6 class="mb-3">Search</h6>
-                        <input type="text" class="form-control" placeholder="Find your product">
+            <!-- Filter Bar -->
+            <div class="row g-3 mb-4 bg-white p-3 rounded-4 shadow-sm border">
+                <div class="col-lg-4 col-md-6">
+                    <div class="input-group">
+                        <span class="input-group-text bg-light border-end-0"><i class="fas fa-search text-muted"></i></span>
+                        <input type="text" id="searchInput" class="form-control border-start-0" placeholder="Search protein, brand, goal...">
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6">
-                    <div class="premium-card p-4">
-                        <h6 class="mb-3">Category</h6>
-                        <select class="form-select"><option>All Categories</option><option>Whey Protein</option><option>Plant Protein</option><option>Mass Gainer</option></select>
-                    </div>
+                    <select id="categorySelect" class="form-select">
+                        <option value="">All Categories</option>
+                        <option value="Whey Protein">Whey Protein</option>
+                        <option value="Mass Gainer">Mass Gainer</option>
+                        <option value="Creatine">Creatine</option>
+                        <option value="Pre-Workout">Pre-Workout</option>
+                        <option value="Vitamins">Vitamins</option>
+                        <option value="Beginner Pack">Beginner Pack</option>
+                    </select>
                 </div>
                 <div class="col-lg-3 col-md-6">
-                    <div class="premium-card p-4">
-                        <h6 class="mb-3">Goal</h6>
-                        <select class="form-select"><option>All Goals</option><option>Muscle Gain</option><option>Fat Loss</option><option>Recovery</option></select>
-                    </div>
+                    <select id="sortSelect" class="form-select">
+                        <option value="featured">Sort by Featured</option>
+                        <option value="price_low">Price: Low to High</option>
+                        <option value="price_high">Price: High to Low</option>
+                        <option value="rating">Top Rated</option>
+                    </select>
                 </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="premium-card p-4">
-                        <h6 class="mb-3">Sort By</h6>
-                        <select class="form-select"><option>Featured</option><option>Price: Low to High</option><option>Price: High to Low</option><option>Top Rated</option></select>
-                    </div>
+                <div class="col-lg-2 col-md-6">
+                    <button id="resetFilterBtn" class="btn btn-outline-secondary w-100 fw-semibold">Reset Filters</button>
                 </div>
             </div>
-            <div class="row g-4">
-                <div class="col-xl-3 col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="product-item">
-                        <div class="position-relative bg-light overflow-hidden">
-                            <img class="img-fluid w-100" src="img/product-1.jpg" alt="">
-                            <span class="badge-sale position-absolute start-0 top-0 m-4 py-1 px-3">20% OFF</span>
-                        </div>
-                        <div class="text-center p-4">
-                            <div class="text-warning mb-2"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></div>
-                            <a class="d-block h5 mb-2" href="single-product.html">Nitro Whey Pro</a>
-                            <p class="small text-muted mb-2">Optimum Nutrition</p>
-                            <span class="text-primary me-1">₹4,999</span>
-                            <span class="text-decoration-line-through text-muted">₹6,199</span>
-                            <div class="mt-3"><span class="goal-pill">Muscle Gain</span><span class="goal-pill">Recovery</span></div>
-                        </div>
-                        <div class="d-flex border-top">
-                            <small class="w-50 text-center border-end py-2"><a class="text-body" href="single-product.html"><i class="fa fa-eye text-primary me-2"></i>Quick View</a></small>
-                            <small class="w-50 text-center py-2"><a class="text-body" href="#"><i class="fa fa-shopping-bag text-primary me-2"></i>Add To Cart</a></small>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                    <div class="product-item">
-                        <div class="position-relative bg-light overflow-hidden">
-                            <img class="img-fluid w-100" src="img/product-2.jpg" alt="">
-                            <span class="badge-sale position-absolute start-0 top-0 m-4 py-1 px-3">Best Seller</span>
-                        </div>
-                        <div class="text-center p-4">
-                            <div class="text-warning mb-2"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-half-alt"></i></div>
-                            <a class="d-block h5 mb-2" href="single-product.html">Plant Power Blend</a>
-                            <p class="small text-muted mb-2">MuscleBlaze</p>
-                            <span class="text-primary me-1">₹3,499</span>
-                            <span class="text-decoration-line-through text-muted">₹4,299</span>
-                            <div class="mt-3"><span class="goal-pill">Vegan</span><span class="goal-pill">Fat Loss</span></div>
-                        </div>
-                        <div class="d-flex border-top">
-                            <small class="w-50 text-center border-end py-2"><a class="text-body" href="single-product.html"><i class="fa fa-eye text-primary me-2"></i>Quick View</a></small>
-                            <small class="w-50 text-center py-2"><a class="text-body" href="#"><i class="fa fa-shopping-bag text-primary me-2"></i>Add To Cart</a></small>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
-                    <div class="product-item">
-                        <div class="position-relative bg-light overflow-hidden">
-                            <img class="img-fluid w-100" src="img/product-3.jpg" alt="">
-                            <span class="badge-sale position-absolute start-0 top-0 m-4 py-1 px-3">New</span>
-                        </div>
-                        <div class="text-center p-4">
-                            <div class="text-warning mb-2"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></div>
-                            <a class="d-block h5 mb-2" href="single-product.html">Mass Builder Plus</a>
-                            <p class="small text-muted mb-2">Nutrabay</p>
-                            <span class="text-primary me-1">₹5,799</span>
-                            <span class="text-decoration-line-through text-muted">₹7,199</span>
-                            <div class="mt-3"><span class="goal-pill">Mass Gain</span><span class="goal-pill">Energy</span></div>
-                        </div>
-                        <div class="d-flex border-top">
-                            <small class="w-50 text-center border-end py-2"><a class="text-body" href="single-product.html"><i class="fa fa-eye text-primary me-2"></i>Quick View</a></small>
-                            <small class="w-50 text-center py-2"><a class="text-body" href="#"><i class="fa fa-shopping-bag text-primary me-2"></i>Add To Cart</a></small>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-3 col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.7s">
-                    <div class="product-item">
-                        <div class="position-relative bg-light overflow-hidden">
-                            <img class="img-fluid w-100" src="img/product-4.jpg" alt="">
-                            <span class="badge-sale position-absolute start-0 top-0 m-4 py-1 px-3">Flash Sale</span>
-                        </div>
-                        <div class="text-center p-4">
-                            <div class="text-warning mb-2"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-half-alt"></i></div>
-                            <a class="d-block h5 mb-2" href="single-product.html">Recovery Fuel</a>
-                            <p class="small text-muted mb-2">MyProtein</p>
-                            <span class="text-primary me-1">₹2,899</span>
-                            <span class="text-decoration-line-through text-muted">₹3,399</span>
-                            <div class="mt-3"><span class="goal-pill">Recovery</span><span class="goal-pill">Post Workout</span></div>
-                        </div>
-                        <div class="d-flex border-top">
-                            <small class="w-50 text-center border-end py-2"><a class="text-body" href="single-product.html"><i class="fa fa-eye text-primary me-2"></i>Quick View</a></small>
-                            <small class="w-50 text-center py-2"><a class="text-body" href="#"><i class="fa fa-shopping-bag text-primary me-2"></i>Add To Cart</a></small>
-                        </div>
-                    </div>
+
+            <!-- Products Grid Container -->
+            <div id="productsGrid" class="row g-4">
+                <div class="col-12 text-center py-5">
+                    <div class="spinner-border text-primary" role="status"></div>
+                    <p class="text-muted mt-2">Loading products catalog...</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="container-fluid bg-dark footer pt-5 wow fadeIn" data-wow-delay="0.1s">
-        <div class="container py-5">
-            <div class="row g-5">
-                <div class="col-lg-3 col-md-6">
-                    <h1 class="fw-bold text-primary mb-4">Protein <span class="text-secondary">Gallery</span></h1>
-                    <p>Premium nutrition for strength, recovery, and everyday performance.</p>
-                    <div class="d-flex pt-2">
-                        <a class="social-link" href="#"><i class="fab fa-instagram"></i></a>
-                        <a class="social-link" href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a class="social-link" href="#"><i class="fab fa-twitter"></i></a>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <h4 class="text-light mb-4">Quick Links</h4>
-                    <a class="btn btn-link" href="about.html">About</a>
-                    <a class="btn btn-link" href="shop.html">Shop</a>
-                    <a class="btn btn-link" href="contact.html">Contact</a>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <h4 class="text-light mb-4">Categories</h4>
-                    <a class="btn btn-link" href="#">Whey Protein</a>
-                    <a class="btn btn-link" href="#">Plant Protein</a>
-                    <a class="btn btn-link" href="#">Mass Gainer</a>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <h4 class="text-light mb-4">Newsletter</h4>
-                    <p>Get exclusive offers and launch updates.</p>
-                    <div class="position-relative mx-auto" style="max-width: 400px;">
-                        <input class="form-control bg-transparent w-100 py-3 ps-4 pe-5" type="text" placeholder="Your email">
-                        <button type="button" class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">Join</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="container-fluid copyright">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">&copy; <a href="#">Protein Gallery</a>, All Rights Reserved.</div>
-                    <div class="col-md-6 text-center text-md-end">Designed for a premium fitness e-commerce experience.</div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <div id="shared-footer"></div>
 
-    <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i class="bi bi-arrow-up"></i></a>
-
+    <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/wow/wow.min.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/waypoints/waypoints.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-    <script src="js/main.js"></script>
+    <script src="js/partials.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        let allProducts = [];
+
+        async function fetchProducts() {
+            try {
+                const search = document.getElementById('searchInput').value.trim();
+                const category = document.getElementById('categorySelect').value;
+
+                let url = '/api/products?';
+                if (search) url += `search=${encodeURIComponent(search)}&`;
+                if (category) url += `category=${encodeURIComponent(category)}&`;
+
+                const res = await fetch(url);
+                const data = await res.json();
+
+                if (data.success && data.products) {
+                    allProducts = data.products;
+                    renderProductsGrid();
+                }
+            } catch (err) {
+                document.getElementById('productsGrid').innerHTML = `<div class="alert alert-danger text-center">Failed to load product catalog.</div>`;
+            }
+        }
+
+        function renderProductsGrid() {
+            const container = document.getElementById('productsGrid');
+            const sortBy = document.getElementById('sortSelect').value;
+
+            let products = [...allProducts];
+
+            if (sortBy === 'price_low') {
+                products.sort((a, b) => parseFloat(a.price) - parseFloat(b.price));
+            } else if (sortBy === 'price_high') {
+                products.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
+            } else if (sortBy === 'rating') {
+                products.sort((a, b) => parseFloat(b.rating_avg || 0) - parseFloat(a.rating_avg || 0));
+            }
+
+            if (products.length === 0) {
+                container.innerHTML = `
+                    <div class="col-12">
+                        <div class="section-shell p-5 text-center">
+                            <i class="fas fa-box-open fa-3x text-muted mb-3 opacity-50"></i>
+                            <h4 class="fw-bold mb-1">No products found</h4>
+                            <p class="text-muted mb-0">Try adjusting your search criteria or category filter.</p>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            let html = '';
+            products.forEach(p => {
+                const rating = parseFloat(p.rating_avg || 4.5);
+                let stars = '';
+                for (let i = 1; i <= 5; i++) {
+                    stars += i <= Math.floor(rating) ? '<i class="fa fa-star text-warning"></i>' : '<i class="far fa-star text-warning"></i>';
+                }
+
+                const price = parseFloat(p.price);
+                const discount = parseFloat(p.discount_percent || 0);
+                const oldPrice = discount > 0 ? price / (1 - (discount / 100)) : price * 1.2;
+                const imgUrl = App.getImageUrl(p.image_url, p);
+
+                html += `
+                    <div class="col-xl-3 col-lg-4 col-md-6">
+                        <div class="product-item bg-white rounded-4 shadow-sm border overflow-hidden h-100 d-flex flex-column">
+                            <div class="product-media position-relative text-center" style="height: 220px;">
+                                <a href="single-product.html?id=${p.id}">
+                                    <img class="img-fluid w-100 h-100" src="${imgUrl}" alt="${p.name}" style="object-fit: cover; object-position: center;">
+                                </a>
+                                <div class="product-overlay"></div>
+                                <span class="badge ${p.stock > 0 ? 'bg-success' : 'bg-danger'} position-absolute start-0 top-0 m-3 px-3 py-2 rounded-pill font-monospace" style="font-size: 0.7rem;">${p.stock > 0 ? 'IN STOCK' : 'OUT OF STOCK'}</span>
+                            </div>
+                            <div class="p-4 d-flex flex-column flex-grow-1 text-center">
+                                <div class="text-warning mb-2 small">${stars} <span class="text-muted ms-1">(${rating.toFixed(1)})</span></div>
+                                <a class="h6 fw-bold mb-1 text-dark text-decoration-none text-truncate" href="single-product.html?id=${p.id}" title="${p.name}">${p.name}</a>
+                                <p class="small text-muted mb-2">${p.brand || 'Protein Gallery'}</p>
+                                <div class="d-flex justify-content-center flex-wrap gap-2 mb-3">
+                                    <span class="product-chip">${p.category || 'Supplements'}</span>
+                                    <span class="product-chip">${(p.goal_tag || 'performance').replace('-', ' ')}</span>
+                                </div>
+                                <p class="small text-muted mb-3">${p.description ? p.description.split('.')[0] : 'Premium formula designed for strength and recovery.'}</p>
+                                
+                                <div class="mt-auto">
+                                    <div class="mb-3">
+                                        <span class="fs-5 fw-bold text-primary me-2">₹${price.toLocaleString('en-IN')}</span>
+                                        <span class="text-decoration-line-through text-muted small">₹${Math.round(oldPrice).toLocaleString('en-IN')}</span>
+                                    </div>
+                                    <div class="d-grid gap-2">
+                                        <button class="btn btn-primary fw-bold py-2 rounded-3 add-to-cart-btn" data-product-id="${p.id}">
+                                            <i class="fa fa-shopping-bag me-2"></i>Add To Cart
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+        document.getElementById('searchInput').addEventListener('input', fetchProducts);
+        document.getElementById('categorySelect').addEventListener('change', fetchProducts);
+        document.getElementById('sortSelect').addEventListener('change', renderProductsGrid);
+        document.getElementById('resetFilterBtn').addEventListener('click', () => {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('categorySelect').value = '';
+            document.getElementById('sortSelect').value = 'featured';
+            fetchProducts();
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const catParam = urlParams.get('category');
+            if (catParam) {
+                const select = document.getElementById('categorySelect');
+                if (select) select.value = catParam;
+            }
+            fetchProducts();
+        });
+    </script>
 </body>
 </html>
