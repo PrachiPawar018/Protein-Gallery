@@ -61,7 +61,7 @@ For security in production, add these rules in Realtime Database → Rules:
 ## Testing
 
 ### Test 1: Register New User
-1. Go to http://localhost:8000/register.html
+1. Go to http://127.0.0.1:8000/register.html
 2. Fill in form:
    - Name: "John Doe"
    - Email: "john@example.com"
@@ -76,7 +76,7 @@ For security in production, add these rules in Realtime Database → Rules:
 3. Should see your user data stored there
 
 ### Test 3: Login with Registered Account
-1. Go to http://localhost:8000/login.html
+1. Go to http://127.0.0.1:8000/login.html
 2. Email: "john@example.com"
 3. Password: "password123"
 4. Should login successfully and redirect to home page

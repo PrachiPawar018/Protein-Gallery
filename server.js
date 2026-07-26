@@ -1,3 +1,4 @@
+const fs = require('fs');
 const express = require('express');
 const mysql = require('mysql2/promise');
 const bcrypt = require('bcryptjs');
@@ -6,32 +7,47 @@ const Razorpay = require('razorpay');
 const nodemailer = require('nodemailer');
 const cors = require('cors');
 const path = require('path');
-require('dotenv').config();
+const dotenv = require('dotenv');
+
+const envPath = fs.existsSync(path.resolve(__dirname, '.env'))
+    ? path.resolve(__dirname, '.env')
+    : path.resolve(__dirname, '.env.example');
+dotenv.config({ path: envPath });
+console.log(`Loaded environment variables from ${envPath}`);
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+const isProduction = process.env.NODE_ENV === 'production';
 
 // Body Parsers & CORS
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
+app.use(cors({
+    origin: true,
+    credentials: true
+}));
+
+app.set('trust proxy', 1);
 
 // Express Session Setup
 app.use(session({
     secret: process.env.SESSION_SECRET || 'protein_gallery_secret_key_2026',
     resave: false,
     saveUninitialized: false,
+    proxy: true,
     cookie: {
         maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
-        httpOnly: true
+        httpOnly: true,
+        sameSite: process.env.SESSION_COOKIE_SAMESITE || 'lax',
+        secure: process.env.SESSION_COOKIE_SECURE === 'true' || isProduction
     }
 }));
 
 // MySQL Database Connection Pool
 const db = mysql.createPool({
-    host: process.env.DB_HOST || 'localhost',
+    host: process.env.DB_HOST || '127.0.0.1',
     user: process.env.DB_USER || 'root',
-    password: process.env.DB_PASSWORD || '',
+    password: process.env.DB_PASSWORD || 'root',
     database: process.env.DB_NAME || 'protein_gallery',
     waitForConnections: true,
     connectionLimit: 10,
@@ -59,10 +75,29 @@ const razorpay = new Razorpay({
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: process.env.EMAIL_USER || 'noreply.proteingallery@gmail.com',
-        pass: process.env.EMAIL_PASS || 'dummyapppass'
+        user: process.env.EMAIL_USER || 'helpreach18@gmail.com',
+        pass: process.env.EMAIL_PASS || 'xgyp lyjw snna awjv'
     }
 });
+
+const EMAIL_FROM = process.env.EMAIL_FROM || process.env.EMAIL_USER || 'helpreach18@gmail.com';
+
+async function sendAuthEmail(to, subject, text, html) {
+    if (!to) return;
+
+    try {
+        await transporter.sendMail({
+            from: `"Protein Gallery" <${EMAIL_FROM}>`,
+            to,
+            subject,
+            text,
+            html
+        });
+        console.log(`✅ Email sent successfully to ${to}`);
+    } catch (error) {
+        console.warn(`❌ Email could not be sent to ${to}:`, error.message);
+    }
+}
 
 // ==========================================
 // 1. AUTHENTICATION ENDPOINTS
@@ -94,6 +129,13 @@ app.post('/api/auth/register', async (req, res) => {
             [name, email, phone_number || null, password_hash]
         );
 
+        await sendAuthEmail(
+            email,
+            'Welcome to Protein Gallery!',
+            `Hello ${name}, your account has been created successfully. Welcome to our family!`,
+            `<h3>Welcome to Protein Gallery!</h3><p>Hello ${name}, your account has been created successfully. Welcome to our family!</p>`
+        );
+
         res.status(201).json({
             success: true,
             message: 'Registration successful! Please login to continue.',
@@ -101,7 +143,19 @@ app.post('/api/auth/register', async (req, res) => {
         });
     } catch (error) {
         console.error('Registration Error:', error);
-        res.status(500).json({ success: false, message: 'Server error during registration.' });
+
+        let message = 'Server error during registration.';
+        if (error && error.code) {
+            if (error.code === 'ER_ACCESS_DENIED_ERROR') {
+                message = 'Database access denied. Check DB credentials in .env.';
+            } else if (error.code === 'ER_BAD_DB_ERROR') {
+                message = 'Database not found. Create the database and update DB_NAME in .env.';
+            } else if (error.code === 'ER_NO_SUCH_TABLE') {
+                message = 'Required table missing. Initialize the database schema first.';
+            }
+        }
+
+        res.status(500).json({ success: false, message });
     }
 });
 
@@ -138,6 +192,13 @@ app.post('/api/auth/login', async (req, res) => {
             phone_number: user.phone_number,
             role: user.role
         };
+
+        await sendAuthEmail(
+            user.email,
+            'Protein Gallery Security Alert',
+            `Hello ${user.name}, your account was logged in successfully. If this wasn't you, please change your password immediately.`,
+            `<h3>Security Alert</h3><p>Hello ${user.name}, your account was logged in successfully. If this wasn't you, please change your password immediately.</p>`
+        );
 
         res.json({
             success: true,
@@ -204,18 +265,12 @@ app.post('/api/auth/forgot-password', async (req, res) => {
 
         await db.query('UPDATE users SET reset_otp = ?, otp_expiry = ? WHERE email = ?', [otp, otp_expiry, email]);
 
-        // Attempt Email sending
-        try {
-            await transporter.sendMail({
-                from: '"Protein Gallery" <noreply.proteingallery@gmail.com>',
-                to: email,
-                subject: 'Protein Gallery - Password Reset OTP',
-                text: `Your password reset OTP is: ${otp}. It is valid for 15 minutes.`,
-                html: `<h3>Protein Gallery Password Reset</h3><p>Your OTP code is: <strong>${otp}</strong></p><p>Valid for 15 minutes.</p>`
-            });
-        } catch (mailErr) {
-            console.log('Nodemailer info (dev mode fallback): OTP generated:', otp);
-        }
+        await sendAuthEmail(
+            email,
+            'Protein Gallery - Password Reset OTP',
+            `Your password reset OTP is: ${otp}. It is valid for 15 minutes.`,
+            `<h3>Protein Gallery Password Reset</h3><p>Your OTP code is: <strong>${otp}</strong></p><p>Valid for 15 minutes.</p>`
+        );
 
         res.json({
             success: true,
@@ -280,6 +335,13 @@ app.post('/api/auth/reset-password', async (req, res) => {
         await db.query(
             'UPDATE users SET password_hash = ?, reset_otp = NULL, otp_expiry = NULL WHERE email = ?',
             [password_hash, email]
+        );
+
+        await sendAuthEmail(
+            email,
+            'Protein Gallery Password Updated',
+            'Your password has been reset successfully. If this was not you, contact support immediately.',
+            '<h3>Password Updated</h3><p>Your password has been reset successfully. If this was not you, contact support immediately.</p>'
         );
 
         res.json({ success: true, message: 'Password reset successful! Please login with your new password.' });
@@ -347,6 +409,13 @@ app.put('/api/user/change-password', async (req, res) => {
         const password_hash = await bcrypt.hash(newPassword, salt);
 
         await db.query('UPDATE users SET password_hash = ? WHERE id = ?', [password_hash, req.session.user.id]);
+
+        await sendAuthEmail(
+            req.session.user.email,
+            'Protein Gallery Password Changed',
+            'Your password has been changed successfully. If this was not you, contact support immediately.',
+            '<h3>Password Changed</h3><p>Your password has been changed successfully. If this was not you, contact support immediately.</p>'
+        );
 
         res.json({ success: true, message: 'Password changed successfully!' });
     } catch (error) {
@@ -1063,6 +1132,6 @@ app.get('*', (req, res) => {
 // Start Express Server
 app.listen(PORT, () => {
     console.log(`====================================================`);
-    console.log(` Protein Gallery Server running on http://localhost:${PORT}`);
+    console.log(` Protein Gallery Server running on http://127.0.0.1:${PORT}`);
     console.log(`====================================================`);
 });

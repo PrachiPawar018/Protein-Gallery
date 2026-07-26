@@ -120,7 +120,7 @@ const App = {
     // Check User Authentication Status & Update Header Navigation
     async checkAuthStatus() {
         try {
-            const res = await fetch('/api/auth/me');
+            const res = await fetch('/api/auth/me', { credentials: 'include' });
             const data = await res.json();
 
             if (data.loggedIn && data.user) {
@@ -198,7 +198,7 @@ const App = {
     // Update Cart Badge Counter dynamically
     async updateCartBadge() {
         try {
-            const res = await fetch('/api/cart');
+            const res = await fetch('/api/cart', { credentials: 'include' });
             const data = await res.json();
 
             let count = 0;
@@ -219,7 +219,7 @@ const App = {
     // Global Logout Handler
     async logout() {
         try {
-            const res = await fetch('/api/auth/logout', { method: 'POST' });
+            const res = await fetch('/api/auth/logout', { method: 'POST', credentials: 'include' });
             const data = await res.json();
             if (data.success) {
                 this.toast('Logged out successfully.', 'info');
@@ -272,6 +272,7 @@ const App = {
                     addBtn.disabled = true;
                     const res = await fetch('/api/cart/add', {
                         method: 'POST',
+                        credentials: 'include',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ product_id: productId, quantity: qty })
                     });
