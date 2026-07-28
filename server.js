@@ -4,6 +4,7 @@ const mysql = require('mysql2/promise');
 const bcrypt = require('bcryptjs');
 const session = require('express-session');
 const Razorpay = require('razorpay');
+const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 const cors = require('cors');
 const path = require('path');
@@ -12,7 +13,7 @@ const dotenv = require('dotenv');
 const envPath = fs.existsSync(path.resolve(__dirname, '.env'))
     ? path.resolve(__dirname, '.env')
     : path.resolve(__dirname, '.env.example');
-dotenv.config({ path: envPath });
+dotenv.config({ path: envPath, override: true });
 console.log(`Loaded environment variables from ${envPath}`);
 
 const app = express();
@@ -66,9 +67,12 @@ const db = mysql.createPool({
 })();
 
 // Razorpay Instance (Uses test key fallback if env missing)
+const razorpayKeyId = (process.env.RAZORPAY_KEY_ID || '').trim();
+const razorpayKeySecret = (process.env.RAZORPAY_KEY_SECRET || '').trim();
+
 const razorpay = new Razorpay({
-    key_id: process.env.RAZORPAY_KEY_ID || 'rzp_test_ProteinGalleryKey',
-    key_secret: process.env.RAZORPAY_KEY_SECRET || 'SecretProteinGallery123'
+    key_id: razorpayKeyId || 'rzp_test_ProteinGalleryKey',
+    key_secret: razorpayKeySecret || 'SecretProteinGallery123'
 });
 
 // Nodemailer Transporter for OTP
@@ -762,7 +766,9 @@ app.post('/api/checkout/create-razorpay-order', async (req, res) => {
             }
         }
 
-        const total_amount = Math.max(0, subtotal - discount_amount);
+        const discountedSubtotal = Math.max(0, subtotal - discount_amount);
+        const gst_amount = discountedSubtotal * 0.18; // 18% GST
+        const total_amount = discountedSubtotal + gst_amount;
 
         // Create Razorpay Order
         const razorpayOrder = await razorpay.orders.create({
@@ -776,11 +782,12 @@ app.post('/api/checkout/create-razorpay-order', async (req, res) => {
             razorpay_order_id: razorpayOrder.id,
             amount: total_amount,
             currency: 'INR',
-            key: process.env.RAZORPAY_KEY_ID || 'rzp_test_ProteinGalleryKey'
+            key: razorpayKeyId || 'rzp_test_ProteinGalleryKey'
         });
     } catch (error) {
         console.error('Create Razorpay Order Error:', error);
-        res.status(500).json({ success: false, message: 'Failed to initiate Razorpay order.' });
+        const errMsg = error.error?.description || error.description || error.message || 'Failed to initiate Razorpay order.';
+        res.status(500).json({ success: false, message: errMsg });
     }
 });
 
@@ -826,7 +833,20 @@ app.post('/api/checkout/verify-payment', async (req, res) => {
             }
         }
 
-        const total_amount = Math.max(0, subtotal - discount_amount);
+        // Verify Razorpay HMAC Signature
+        const keySecret = razorpayKeySecret || 'SecretProteinGallery123';
+        const expectedSignature = crypto
+            .createHmac('sha256', keySecret)
+            .update(`${razorpay_order_id}|${razorpay_payment_id}`)
+            .digest('hex');
+
+        if (expectedSignature !== razorpay_signature) {
+            return res.status(400).json({ success: false, message: 'Invalid payment signature verification failed.' });
+        }
+
+        const discountedSubtotal = Math.max(0, subtotal - discount_amount);
+        const gst_amount = discountedSubtotal * 0.18;
+        const total_amount = discountedSubtotal + gst_amount;
         const tracking_number = 'PG-TRACK-' + Math.floor(100000 + Math.random() * 900000);
 
         // 1. Create order record
