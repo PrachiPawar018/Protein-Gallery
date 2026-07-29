@@ -89,16 +89,31 @@
                             <form id="changePasswordForm">
                                 <div class="mb-3">
                                     <label class="form-label fw-semibold">Current Password</label>
-                                    <input type="password" id="currPass" class="form-control py-2" placeholder="Enter current password" required>
+                                    <div class="input-group">
+                                        <input type="password" id="currPass" class="form-control border-end-0 py-2" placeholder="Enter current password" required>
+                                        <button type="button" class="btn btn-light border border-start-0 toggle-password" data-target="currPass">
+                                            <i class="fas fa-eye text-muted"></i>
+                                        </button>
+                                    </div>
                                 </div>
                                 <div class="row g-3 mb-4">
                                     <div class="col-md-6">
                                         <label class="form-label fw-semibold">New Password</label>
-                                        <input type="password" id="newPass" class="form-control py-2" placeholder="Enter new password" required>
+                                        <div class="input-group">
+                                            <input type="password" id="newPass" class="form-control border-end-0 py-2" placeholder="Enter new password" required>
+                                            <button type="button" class="btn btn-light border border-start-0 toggle-password" data-target="newPass">
+                                                <i class="fas fa-eye text-muted"></i>
+                                            </button>
+                                        </div>
                                     </div>
                                     <div class="col-md-6">
                                         <label class="form-label fw-semibold">Confirm New Password</label>
-                                        <input type="password" id="confirmPass" class="form-control py-2" placeholder="Confirm new password" required>
+                                        <div class="input-group">
+                                            <input type="password" id="confirmPass" class="form-control border-end-0 py-2" placeholder="Confirm new password" required>
+                                            <button type="button" class="btn btn-light border border-start-0 toggle-password" data-target="confirmPass">
+                                                <i class="fas fa-eye text-muted"></i>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
 
