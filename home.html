@@ -22,6 +22,16 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     <style>
+    :root {
+        --gradient-veil: radial-gradient(circle at top, rgba(255, 139, 41, 0.22), transparent 34%), linear-gradient(135deg, #1b140f 0%, #2b1e15 45%, #120d08 100%);
+        --gradient-ember: linear-gradient(90deg, #ff8b29 0%, #f2c98d 100%);
+        --primary: #ff8b29;
+        --gold: #f2c98d;
+        --cream: #f8ebd3;
+        --primary-text: #fff7ea;
+        --muted: rgba(248, 235, 211, 0.78);
+    }
+
     .name-loader {
         position: fixed;
         inset: 0;
@@ -29,13 +39,43 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        background: radial-gradient(circle at top, #0b0b0d 0%, #050506 68%, #010101 100%);
-        color: #fff;
+        background: var(--gradient-veil);
+        color: var(--cream);
         overflow: hidden;
     }
 
+    .name-loader.is-hidden {
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.7s ease;
+    }
+
+    .loader-curtain {
+        position: absolute;
+        inset: 0;
+        width: 50%;
+        background: rgba(3, 4, 6, 0.95);
+        transform: translateX(0);
+        transition: transform 1.15s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .name-loader.is-hidden .loader-curtain {
+        transform: translateX(-101%);
+    }
+
+    .loader-curtain.right {
+        left: 50%;
+        transform: translateX(0);
+    }
+
+    .name-loader.is-hidden .loader-curtain.right {
+        transform: translateX(101%);
+    }
+
     .loader-box {
-        width: min(92vw, 820px);
+        position: relative;
+        z-index: 1;
+        width: min(92vw, 860px);
         text-align: center;
         padding: 0 1rem;
     }
@@ -43,47 +83,47 @@
     .brand-text {
         display: flex;
         justify-content: center;
-        flex-wrap: nowrap;
-        white-space: nowrap;
-        gap: 0.1em;
+        flex-wrap: wrap;
+        gap: 0.12em;
         font-family: 'Montserrat', 'Poppins', sans-serif;
-        font-size: clamp(3rem, 7vw, 6rem);
+        font-size: clamp(3rem, 7vw, 6.25rem);
         font-weight: 800;
         letter-spacing: 0.14em;
         line-height: 1;
-        margin-bottom: 1.25rem;
+        margin-bottom: 1.4rem;
     }
 
-    .brand-text .word {
+    .loader-word {
         display: inline-flex;
-        gap: 0.08em;
+        gap: 0.06em;
+        white-space: nowrap;
     }
 
-    .brand-text span {
+    .loader-letter {
         display: inline-block;
         opacity: 0;
-        transform: translateX(var(--x, 0px)) translateY(70px) rotate(var(--rot, 8deg));
-        animation: charIn 1.15s cubic-bezier(.2,1,.3,1) var(--delay, 0s) forwards;
+        transform: translateY(72px) rotate(var(--rot, 8deg));
+        animation: charIn 1.2s cubic-bezier(.2,1,.3,1) var(--delay, 0s) forwards;
         will-change: transform, opacity;
     }
 
-    .brand-text .accent {
-        color: #ffab3a;
-        text-shadow: 0 0 30px rgba(255, 171, 58, 0.28);
+    .loader-word.accent .loader-letter {
+        color: var(--gold);
+        text-shadow: 0 0 32px rgba(255, 213, 123, 0.28);
     }
 
     @keyframes charIn {
         to {
             opacity: 1;
-            transform: translateX(0) translateY(0) rotate(0deg);
+            transform: translateY(0) rotate(0deg);
         }
     }
 
     .loader-bar {
-        margin: 0 auto 1.25rem;
-        width: min(72vw, 560px);
-        height: 4px;
-        background: rgba(255, 255, 255, 0.08);
+        margin: 0 auto 1.2rem;
+        width: min(72vw, 620px);
+        height: 3px;
+        background: rgba(255, 255, 255, 0.10);
         border-radius: 999px;
         overflow: hidden;
     }
@@ -92,8 +132,8 @@
         display: block;
         width: 0%;
         height: 100%;
-        background: linear-gradient(90deg, #ff8b29, #ffd57b);
-        box-shadow: 0 0 18px rgba(255, 139, 41, 0.45);
+        background: var(--gradient-ember);
+        box-shadow: 0 0 24px rgba(255, 139, 41, 0.42);
         border-radius: inherit;
         transition: width 0.1s linear;
     }
@@ -104,137 +144,377 @@
         align-items: center;
         gap: 0.45rem;
         font-family: 'Inter', sans-serif;
-        color: rgba(255, 255, 255, 0.82);
+        color: rgba(248, 235, 211, 0.82);
     }
 
     .loader-copy #loaderPct {
         font-size: 0.95rem;
         letter-spacing: 0.3em;
         font-weight: 600;
+        color: var(--cream);
     }
 
     .loader-copy-label {
         font-size: 0.78rem;
         letter-spacing: 0.24em;
         text-transform: uppercase;
-        color: rgba(255, 255, 255, 0.62);
+        color: rgba(248, 235, 211, 0.62);
     }
 
-    .name-loader.is-hidden {
-        opacity: 0;
+    .hero-shell {
+        position: relative;
+        min-height: 100svh;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        padding: 6.5rem 1.5rem 4.5rem;
+        background: var(--gradient-veil);
+        color: var(--primary-text);
+    }
+
+    .hero-shell::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at top right, rgba(255, 139, 41, 0.16), transparent 28%);
         pointer-events: none;
-        transition: opacity 0.65s ease;
     }
 
+    .hero-shell > * {
+        position: relative;
+        z-index: 1;
+    }
 
+    .hero-grid {
+        width: min(1200px, 100%);
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1.05fr 0.95fr;
+        align-items: center;
+        gap: 3rem;
+    }
 
-    .hero-wrap {
-  display: grid;
-  grid-template-columns: 1.05fr 0.95fr;
-  align-items: center;
-  gap: 3rem;
-  min-height: calc(100vh - 6rem);
-  padding: 4rem 0;
-}
+    .hero-copy {
+        max-width: 640px;
+    }
 
-.hero-copy {
-  max-width: 620px;
-}
+    .hero-copy .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        padding: 0.65rem 1rem;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.08);
+        color: var(--cream);
+        border: 1px solid rgba(242, 201, 141, 0.18);
+        backdrop-filter: blur(18px);
+    }
 
-.hero-image-wrapper {
-  position: relative;
-  width: min(520px, 100%);
-  margin: 0 auto;
-  display: grid;
-  place-items: center;
-}
+    .display-title {
+        font-family: 'Montserrat', 'Poppins', sans-serif;
+        font-weight: 800;
+        letter-spacing: -0.03em;
+    }
 
-.hero-image {
-  width: 100%;
-  display: block;
-  transform: translateY(48px) rotate(8deg);
-  opacity: 0;
-  animation: heroEnter 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
-  transition: transform 0.25s ease;
-  box-shadow: 0 50px 80px rgba(0, 0, 0, 0.85);
-}
+    .hero-heading {
+        margin: 1.2rem 0 1.15rem;
+        font-size: clamp(3rem, 7vw, 6.8rem);
+        line-height: 0.9;
+        color: var(--cream);
+    }
 
-.hero-image:hover {
-  transform: translateY(-8px) scale(1.02);
-}
+    .hero-word {
+        display: block;
+        overflow: hidden;
+        margin-bottom: 0.12em;
+    }
 
-.hero-ring {
-  position: absolute;
-  border-radius: 999px;
-  pointer-events: none;
-}
+    .hero-word > span {
+        display: inline-block;
+        transform: translateY(120%);
+        opacity: 0;
+        animation: heroWordIn 1.2s cubic-bezier(.2,1,.3,1) forwards;
+    }
 
-.hero-ring-1 {
-  inset: -12%;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  animation: rotateRing 46s linear infinite;
-}
+    .hero-word:nth-child(2) > span {
+        animation-delay: 0.16s;
+    }
 
-.hero-ring-2 {
-  inset: -18%;
-  border: 1px solid rgba(255, 153, 0, 0.14);
-  animation: rotateRingReverse 72s linear infinite;
-}
+    .hero-word:nth-child(3) > span {
+        animation-delay: 0.32s;
+    }
 
-.hero-label {
-  position: absolute;
-  background: rgba(10, 10, 10, 0.72);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(18px);
-  border-radius: 1rem;
-  padding: 1rem 1.2rem;
-  color: #fff;
-  text-align: center;
-}
+    .hero-word.accent > span {
+        color: var(--gold);
+        text-shadow: 0 0 54px rgba(255, 213, 123, 0.32);
+    }
 
-.hero-label-left {
-  left: 0.75rem;
-  bottom: 1.5rem;
-}
+    @keyframes heroWordIn {
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
 
-.hero-label-right {
-  right: 0.75rem;
-  top: 1.5rem;
-}
+    .hero-copy p {
+        color: var(--muted);
+        max-width: 520px;
+        font-size: 1rem;
+        line-height: 1.8;
+    }
 
-.hero-label strong {
-  display: block;
-  font-size: 1.8rem;
-  margin-bottom: 0.25rem;
-  color: #ff9a1f;
-}
+    .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-top: 1.75rem;
+    }
 
-.hero-label span {
-  display: block;
-  font-size: 0.75rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.78);
-}
+    .hero-actions .btn {
+        min-width: 190px;
+        justify-content: center;
+    }
 
-@keyframes heroEnter {
-  to {
-    opacity: 1;
-    transform: translateY(0) rotate(0deg);
-  }
-}
+    .hero-actions .btn-outline-light {
+        border-color: rgba(255, 255, 255, 0.18);
+        color: var(--cream);
+        background: rgba(248, 235, 211, 0.07);
+    }
 
-@keyframes rotateRing {
-  to {
-    transform: rotate(360deg);
-  }
-}
+    .hero-actions .btn-outline-light:hover {
+        background: rgba(248, 235, 211, 0.14);
+        color: var(--cream);
+        transform: translateY(-2px);
+    }
 
-@keyframes rotateRingReverse {
-  to {
-    transform: rotate(-360deg);
-  }
-}
+    .hero-stats {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.35rem;
+        margin-top: 2rem;
+    }
+
+    .hero-stats > div {
+        min-width: 120px;
+        text-align: left;
+    }
+
+    .hero-stats strong {
+        display: block;
+        font-size: 1.8rem;
+        color: var(--gold);
+        margin-bottom: 0.2rem;
+    }
+
+    .hero-stats span {
+        display: block;
+        font-size: 0.72rem;
+        letter-spacing: 0.20em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.72);
+    }
+
+    .hero-art {
+        position: relative;
+        width: min(520px, 100%);
+        margin: 0 auto;
+        display: grid;
+        place-items: center;
+        --tilt-x: 0deg;
+        --tilt-y: 0deg;
+    }
+
+    .hero-visual {
+        width: 100%;
+        position: relative;
+        transform: perspective(1200px) rotateX(var(--tilt-y)) rotateY(var(--tilt-x));
+        transition: transform 0.3s ease-out;
+        animation: heroFloat 6.2s ease-in-out infinite;
+    }
+
+    .hero-visual img {
+        width: 100%;
+        display: block;
+        filter: drop-shadow(0 46px 70px rgba(0, 0, 0, 0.72));
+    }
+
+    .hero-shine {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        opacity: 0.6;
+        mix-blend-mode: overlay;
+        background: linear-gradient(115deg, transparent 34%, rgba(255,255,255,0.32) 48%, transparent 62%);
+    }
+
+    .hero-orbit {
+        position: absolute;
+        inset: -8%;
+        border-radius: 50%;
+        border: 1px solid rgba(255,255,255,0.14);
+        pointer-events: none;
+        animation: spin 46s linear infinite;
+    }
+
+    .hero-orbit::before {
+        content: "";
+        position: absolute;
+        top: -4px;
+        left: 50%;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: var(--primary);
+        transform: translateX(-50%);
+        box-shadow: 0 0 18px 6px rgba(255, 139, 41, 0.45);
+    }
+
+    .hero-orbit.secondary {
+        inset: -14%;
+        border-color: rgba(255, 213, 123, 0.16);
+        animation: spinReverse 72s linear infinite;
+    }
+
+    .hero-orbit.secondary::before {
+        top: auto;
+        bottom: -3px;
+        background: var(--gold);
+        box-shadow: 0 0 16px 4px rgba(255, 213, 123, 0.4);
+    }
+
+    .hero-pill {
+        position: absolute;
+        padding: 0.95rem 1.15rem;
+        border-radius: 1rem;
+        background: rgba(10, 10, 14, 0.72);
+        border: 1px solid rgba(255,255,255,0.10);
+        backdrop-filter: blur(18px);
+        color: var(--cream);
+        text-align: center;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        animation: heroFloat 6.8s ease-in-out infinite;
+    }
+
+    .hero-pill strong {
+        display: block;
+        font-size: 1.7rem;
+        color: var(--gold);
+        margin-bottom: 0.2rem;
+    }
+
+    .hero-pill span {
+        display: block;
+        font-size: 0.72rem;
+        letter-spacing: 0.20em;
+        text-transform: uppercase;
+        color: rgba(248, 235, 211, 0.78);
+    }
+
+    .hero-pill.left {
+        left: 0.8rem;
+        bottom: 1.5rem;
+    }
+
+    .hero-pill.right {
+        right: 0.8rem;
+        top: 1.1rem;
+        animation-delay: 1.2s;
+    }
+
+    .scroll-cue {
+        position: absolute;
+        left: 50%;
+        bottom: 2rem;
+        transform: translateX(-50%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.7rem;
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 0.78rem;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+    }
+
+    .scroll-track {
+        height: 3rem;
+        width: 1px;
+        overflow: hidden;
+        background: rgba(255,255,255,0.18);
+        position: relative;
+    }
+
+    .scroll-track::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        top: -100%;
+        background: var(--gold);
+        animation: scrollSlide 2.2s ease-in-out infinite;
+    }
+
+    @keyframes heroFloat {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+    }
+
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+
+    @keyframes spinReverse {
+        to { transform: rotate(-360deg); }
+    }
+
+    @keyframes scrollSlide {
+        0% { transform: translateY(0); }
+        100% { transform: translateY(200%); }
+    }
+
+    @media (max-width: 991.98px) {
+        .hero-grid {
+            grid-template-columns: 1fr;
+            text-align: center;
+        }
+
+        .hero-copy {
+            margin: 0 auto;
+        }
+
+        .hero-actions {
+            justify-content: center;
+        }
+
+        .hero-stats {
+            justify-content: center;
+        }
+
+        .hero-stats > div {
+            text-align: center;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .hero-shell {
+            padding-top: 5rem;
+            padding-bottom: 5rem;
+        }
+
+        .hero-heading {
+            font-size: clamp(2.55rem, 11vw, 3.2rem);
+        }
+
+        .hero-pill {
+            position: static;
+            margin-top: 1rem;
+        }
+
+        .hero-art {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+    }
 </style>
 </head>
 
@@ -242,6 +522,8 @@
     <div class="scroll-progress"></div>
 
 <div id="nameLoader" class="name-loader" aria-live="polite" aria-label="Loading Protein Gallery">
+    <div class="loader-curtain" aria-hidden="true"></div>
+    <div class="loader-curtain right" aria-hidden="true"></div>
     <div class="loader-box">
         <div class="brand-text" id="brandText"></div>
         <div class="loader-bar">
@@ -256,38 +538,64 @@
 
     <div id="shared-navbar" class="wow fadeIn" data-wow-delay="0.1s"></div>
 
-    <div class="container-fluid p-0 mb-5 hero-wrap">
-  <div class="hero-copy">
-    <span class="hero-badge"><i class="fas fa-bolt"></i> New Launch • Nitro Whey Pro</span>
-    <h1 class="display-2 mb-4">Premium nutrition for stronger days.</h1>
-    <p class="lead mb-4">
-      Explore lab-tested proteins, recovery essentials, and clean performance nutrition built to support every goal.
-    </p>
-    <a href="shop.html" class="btn btn-primary rounded-pill py-sm-3 px-sm-5 me-3">Shop Now</a>
-    <a href="single-product.html" class="btn btn-outline-primary rounded-pill py-sm-3 px-sm-5">View Best Seller</a>
-  </div>
+    <section class="hero-shell" id="home">
+        <div class="hero-grid">
+            <div class="hero-copy">
+                <span class="eyebrow"><i class="fas fa-bolt"></i> Premium Sports Nutrition</span>
+                <h1 class="display-title hero-heading">
+                    <span class="hero-word"><span>Fuel</span></span>
+                    <span class="hero-word"><span>Your</span></span>
+                    <span class="hero-word accent"><span>Performance</span></span>
+                </h1>
+                <p>
+                    Premium supplements for athletes, bodybuilders and everyone chasing a higher standard — curated from the world's most trusted labs.
+                </p>
+                <div class="hero-actions">
+                    <a href="shop.html" class="btn btn-primary rounded-pill py-sm-3 px-sm-5">Shop Now</a>
+                    <a href="brands.html" class="btn btn-outline-light rounded-pill py-sm-3 px-sm-5">Explore Brands</a>
+                </div>
+                <div class="hero-stats">
+                    <div>
+                        <strong>100%</strong>
+                        <span>Lab Tested</span>
+                    </div>
+                    <div>
+                        <strong>24H</strong>
+                        <span>Dispatch</span>
+                    </div>
+                    <div>
+                        <strong>50+</strong>
+                        <span>Elite Brands</span>
+                    </div>
+                </div>
+            </div>
 
-  <div class="hero-image-wrapper">
-    <div class="hero-ring hero-ring-1"></div>
-    <div class="hero-ring hero-ring-2"></div>
+            <div class="hero-art">
+                <div class="hero-orbit"></div>
+                <div class="hero-orbit secondary"></div>
+                <div class="hero-visual">
+                    <img src="img/hero-tub.png" alt="Protein Gallery premium whey protein container" />
+                    <span class="hero-shine" aria-hidden="true"></span>
+                </div>
 
-    <img
-      src="img/hero-tub.png"
-      alt="Protein Gallery premium whey protein container"
-      class="hero-image"
-    />
+                <div class="hero-pill left">
+                    <span>Whey Isolate</span>
+                    <strong>₹4,299</strong>
+                </div>
 
-    <div class="hero-label hero-label-left">
-      <span>WHEY ISOLATE</span>
-      <strong>₹4,299</strong>
-    </div>
+                <div class="hero-pill right">
+                    <strong>4.9</strong>
+                    <span>12k Reviews</span>
+                </div>
+            </div>
+        </div>
 
-    <div class="hero-label hero-label-right">
-      <strong>4.9</strong>
-      <span>12K REVIEWS</span>
-    </div>
-  </div>
-</div>
+        <div class="scroll-cue" aria-hidden="true">
+            <span>Scroll</span>
+            <div class="scroll-track"></div>
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </section>
 
     <div class="container-xxl py-5">
         <div class="container">
@@ -804,19 +1112,19 @@
         const brandText = document.getElementById('brandText');
         const barFill = document.getElementById('loaderBarFill');
         const loaderPct = document.getElementById('loaderPct');
+        const heroArt = document.querySelector('.hero-art');
 
         const words = ['Protein', 'Gallery'];
-
         brandText.innerHTML = words.map((word, wordIndex) => {
-            const accentClass = wordIndex === 1 ? 'accent' : '';
-            return `<span class="word">${[...word].map((char, charIndex) => {
-                const delay = wordIndex * 0.18 + charIndex * 0.05;
-                const direction = wordIndex === 0 ? -1 : 1;
-                return `<span class="${accentClass}" style="--delay:${delay}s; --x:${direction * 40}px; --rot:${direction * 8}deg">${char}</span>`;
+            const accentClass = wordIndex === 1 ? 'loader-word accent' : 'loader-word';
+            return `<span class="${accentClass}">${[...word].map((char, charIndex) => {
+                const delay = wordIndex * 0.18 + charIndex * 0.06;
+                const rotation = wordIndex === 0 ? -8 : 8;
+                return `<span class="loader-letter" style="--delay:${delay}s; --rot:${rotation}deg">${char}</span>`;
             }).join('')}</span>`;
         }).join('');
 
-        const totalTime = 2200;
+        const totalTime = 2400;
         let startTime = null;
 
         function tick(timestamp) {
@@ -824,13 +1132,24 @@
             const progress = Math.min((timestamp - startTime) / totalTime, 1);
             const percent = Math.round(progress * 100);
             barFill.style.width = `${percent}%`;
-            loaderPct.textContent = `${String(percent).padStart(2, '0')}%`;
+            loaderPct.textContent = `${String(percent).padStart(3, '0')}%`;
             if (progress < 1) {
                 requestAnimationFrame(tick);
             } else {
+                document.body.classList.add('is-ready');
                 loader.classList.add('is-hidden');
-                setTimeout(() => loader.remove(), 700);
+                setTimeout(() => loader.remove(), 750);
             }
+        }
+
+        if (heroArt && window.matchMedia('(pointer: fine)').matches) {
+            const onPointerMove = (event) => {
+                const x = (event.clientX / window.innerWidth - 0.5) * 24;
+                const y = (event.clientY / window.innerHeight - 0.5) * -18;
+                heroArt.style.setProperty('--tilt-x', `${x}deg`);
+                heroArt.style.setProperty('--tilt-y', `${y}deg`);
+            };
+            window.addEventListener('pointermove', onPointerMove);
         }
 
         requestAnimationFrame(tick);
